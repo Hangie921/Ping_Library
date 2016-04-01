@@ -1,0 +1,13 @@
+{
+  "name": "hr-api",
+  "description": "HR API",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "3.x",
+    "mongodb": "^2.1.11",
+    "mongoose": "^4.4.10",
+    "express-session": "^1.7.6"
+  }
+}
