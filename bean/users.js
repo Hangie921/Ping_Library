@@ -2,9 +2,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// var roleobj = require('.role');
-
-
 // create a schema
 var userSchema = new Schema({
 	system_parameter:{ type: Number, min: 0, max: 999 },
@@ -16,22 +13,6 @@ var userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'roles'
     },
-	//demo-----
-    // id: Schema.Types.ObjectId,
-    // firstName: String,
-    // lastName: String,
-    // fullName: { type: String, trim: true },
-    // managerId: { type: Number, min: 18, max: 65 },
-    // managerName: String,
-    // title: String,
-    // department: String,
-    // cellPhone:String,
-    // officePhone:String,
-    // email:String,
-    // city:String,
-    // pic:String,
-    // twitterId:String,
-    // blog:String
 });
 
 // userSchema.methods.dudify = function() {

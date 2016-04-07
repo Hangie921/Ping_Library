@@ -6,8 +6,9 @@ var functionSchema = new Schema({
 	_id:"String",
 	system_parameter:{ type: Number, min: 0, max: 999 },
 	name:String,
+	parent_id:String,
 	function:{
-        type: String,
+        type: Array,
         ref: 'function'
     },
 })
