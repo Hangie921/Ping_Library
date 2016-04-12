@@ -1,8 +1,8 @@
 var express = require('express');
-var gengod = require('./common/generate/god');
+// var gengod = require('../common/generate/god');
 var app = express();
 
-var mytest = require('./test/mytest');
+var mytest = require('../test/mytest');
 
 var mongoose = require("mongoose");
 if (process.argv[2] == '--local') {
