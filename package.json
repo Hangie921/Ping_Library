@@ -1,5 +1,5 @@
 {
-  "name": "hr-api",
+  "name": "pinglib",
   "description": "HR API",
   "version": "0.0.1",
   "private": true,
@@ -13,5 +13,5 @@
     "mongoose": "^4.4.10",
     "nconf": "^0.8.4"
   },
-  // "main":"index.js"
+  "main":"index.js"
 }

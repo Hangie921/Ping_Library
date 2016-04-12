@@ -200,9 +200,9 @@ var funObj = new functionobj({
 //   console.log("roleBySys="+data.values);
 // });
 
-// sessionManager.getRoleFunByUser(userReg, function (data) {
-//   console.log("getRoleFunByUser="+data.values);
-// });
+sessionManager.getRoleFunByUser(userReg, function (data) {
+  console.log("getRoleFunByUser="+data.values);
+});
 
 // sessionManager.registered(userReg,function (data) {
 //  console.log("registered====>"+data.values);

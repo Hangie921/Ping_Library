@@ -1,12 +1,29 @@
 var express = require('express');
 var gengod = require('./common/generate/god');
 var app = express();
+// var mongoose = require("../mongoose");
 
 //---global define
 // global.jQuery = require('jquery');
 
 var mytest = require('./test/mytest');
 
+var mongoose = require("mongoose");
+mongoose.connect('mongodb://192.168.60.65/test')
+
+
+// 0 = disconnected
+// 1 = connected
+// 2 = connecting
+// 3 = disconnecting
+db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('connected', function() {
+    console.log('connected', mongoose.connection.readyState);
+});
+db.once('disconnected', function() {
+    console.log('disconnected', mongoose.connection.readyState);
+});
 
 // var bodyParser = require('body-parser')
 // app.use( bodyParser.json() );       // to support JSON-encoded bodies

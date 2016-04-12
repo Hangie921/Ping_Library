@@ -1,6 +1,5 @@
 
 //-------mongodb setup  start ---------------
-var mongoose = require("../mongoose");
 // var mongoose = require("mongoose");
 // mongoose.connect("mongodb://192.168.60.65/test");
 
@@ -12,20 +11,6 @@ var functionobj = require('../../bean/function');
 var userService = require('../../service/userService');
 var response = require('../../common/response');
 
-// 0 = disconnected
-// 1 = connected
-// 2 = connecting
-// 3 = disconnecting
-db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('connected', function() {
-    console.log('connected', mongoose.connection.readyState);
-});
-db.once('disconnected', function() {
-    console.log('disconnected', mongoose.connection.readyState);
-});
-
-var Schema = mongoose.Schema;
 
 var GOD_EMAIL 	= "god@ping.com.sg";
 var GOD_NAME  	= "上帝";
@@ -85,6 +70,7 @@ var god = [
         	]
     	}
     ];
+
 
 var funDataRoot = [
 	{_id:"rootno01",parent_id:null,name:"系統設定",url:"http://localhost/setting",system_parameter:0},
