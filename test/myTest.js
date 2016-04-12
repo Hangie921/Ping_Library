@@ -4,10 +4,8 @@ var functionobj = require('../bean/function');
 var roleobj = require('../bean/roles');
 var session = require('express-session');
 
-var userService = require('../service/userService');
 var funService = require('../service/functionService');
 var roleService = require('../service/roleService');
-var gengod = require('../common/generate/god');
 
 
 var sessionManager = require('../interface/session');
@@ -151,12 +149,35 @@ var god = new usersobj({
 var usrSearch = new usersobj({
   system_parameter: 0,
   email: 'mbs002@ping.com.sg',
-  pwd:'ACDE'
+  pwd:'ACDE',
+  function_crud:[
+            {function_id:"settingno0101","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"settingno0102","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"settingno0103","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"settingno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"memberno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"memberno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"memberno0301","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"rootno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"rootno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+          ]
 });
+
+var function_crud = [
+            {function_id:"settingno0101","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"settingno0102","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"settingno0103","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"settingno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"memberno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"memberno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"memberno0301","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"rootno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {function_id:"rootno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+          ]
 
 //呼叫API
 // sessionManager.getUser(usrSearch, function (data) {
-// 	console.log("usrSearch is "+data.code);
+// 	console.log("usrSearch is "+data);
 // });
 
 var roleSearch = new roleobj({
@@ -165,22 +186,53 @@ var roleSearch = new roleobj({
   pwd:'ABCDEFG'
 });
 
+var userReg = new usersobj({
+  system_parameter: 0,
+  email: 'mbs010@ping.com.sg',
+  pwd:'AAA'
+});
+
+var funObj = new functionobj({
+    system_parameter: 0,
+    // parent_id : null
+});
 // roleService.getRoleBySys(0, function (data) {
-//   console.log(data);
+//   console.log("roleBySys="+data.values);
 // });
 
-// sessionManager.getRoleFunByUser(god, function (data) {
-//   console.log(data);
+// sessionManager.getRoleFunByUser(userReg, function (data) {
+//   console.log("getRoleFunByUser="+data.values);
 // });
 
-//var test5 = userService.getMember(mbs005);
-//console.log("test5 is "+test5);
-
-//sessionManager test
-
-// sessionManager.registered(usrSearch,function (data) {
-// 	console.log("registered====>"+data.values);
+// sessionManager.registered(userReg,function (data) {
+//  console.log("registered====>"+data.values);
 // });
+
+//將USER 輸入function_crud
+// sessionManager.getUser(userReg, function (usrObj) {
+//   console.log("getUser... "+usrObj.values);
+//   sessionManager.setFunctionCrud(usrObj,function_crud,function (data) {
+//     console.log("setFunction... "+data.values);
+
+//   });
+// });
+
+var role_id_ary = ['570746898af057fc456b2fc7','570746898af057fc456b2fc8'];
+var role_id_ary = ['570746898af057fc456b2fc8'];
+//將USER 輸入Role
+// sessionManager.getUser(userReg, function (usrObj) {
+//   // console.log("getUser... "+usrObj.values);
+//   sessionManager.setUserRole(usrObj,role_id_ary,function (data) {
+//     // console.log("setUserRole... "+data.values);
+
+//   });
+// });
+
+//取得UserFunction
+// sessionManager.getFunctionByUser(god, function (data) {
+//   console.log(data.values);
+// });
+
 
 // sessionManager.login(usrSearch,function (data) {
 //   console.log(data);
@@ -194,36 +246,23 @@ var roleSearch = new roleobj({
   
 // });
 
-var userReg = new usersobj({
-  system_parameter: 0,
-  email: 'mbs010@ping.com.sg',
-  pwd:'AAA'
-});
-
 
 
 // sessionManager.registered(userReg,function (data) {
 // 		console.log(data);
 // });
 
-//sessionManager getManager()
-// sessionManager.getMember(usrSearch, function (err, data) {
-// 	if (err) return console.error(err);
-// 	console.log("usrSearch is "+data);
+//取得使用者資訊  包括function_crud
+// sessionManager.getUser(userReg, function (data) {
+//  console.log("usrSearch is "+data.values);
 // });
 
-
-
-  var funObj = new functionobj({
-      system_parameter: 0,
-      // parent_id : null
-  });
 
   //--第二層印製
   // sessionManager.getFunction(funObj,function (data) {
   //   // console.log(data);
 
-  //   // //--根目錄
+  // //   // //--根目錄
   //   for(var key in data.values){
   //     if(data.values[key].parent_id == null){
   //       // console.log(data[key].function.toString());
@@ -232,7 +271,7 @@ var userReg = new usersobj({
   //     }
   //   }
 
-  //   // console.log("function success...");
+  // //   // console.log("function success...");
 
   // });
 
@@ -243,7 +282,4 @@ var userReg = new usersobj({
 
 
 
-sessionManager.getFunctionByUser(god, function (data) {
-  console.log(data);
-});
 

@@ -1,4 +1,5 @@
 var express = require('express');
+var gengod = require('./common/generate/god');
 var app = express();
 
 //---global define

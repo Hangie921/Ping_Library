@@ -18,45 +18,75 @@ var fun_getFunction = function(obj,callback){
 		//根節點儲存陣列
 		var funcRootAry=[];
 		//依照根結點為開始塞入資料搜尋
+			// console.log("obj="+obj);
 		for(var key in obj){
 			if(obj[key].parent_id == null){
 				funcRootAry.push(obj[key]);
 				getFunctionByParentId(obj[key]);
 			}
 		}
-
+		// console.log("funcRootAry="+funcRootAry);
 	  	callback(funcRootAry);
 	});
 }
 
-// var fun_getFunctionByUser = function(obj,callback){
+var user_menu_list = null;
+var fun_getFunctionByUser = function(obj,callback){
 
+  	userService.getUser(obj, function (user_data) {
+  		// console.log("user_data=="+user_data.values[0]);
+    	roleService.getRoleFunByUser(user_data,function (role_by_user_data) {
+  		// console.log("role_by_user_data=="+role_by_user_data.values);
+      		//全部function
+      		fun_getFunction(user_data.values[0],function (all_fun_data) {
+      			//使用者傭有的功能 將會被存入user_menu_list
+      			user_menu_list = [];
+      			//驗證所有menu的權限
+      			verifyFunctionByUser(user_data,role_by_user_data,all_fun_data);
 
-// 	functionobj.find({
-// 		system_parameter:obj.system_parameter,
-// 		// parent_id:obj.parent_id
-// 	}, function(err, obj) {
-// 	  if (err) {throw err;}
-// 	  	//暫存資料
-// 		hashMenu = obj;
-// 		//根節點儲存陣列
-// 		var funcRootAry=[];
-// 		//依照根結點為開始塞入資料搜尋
-// 		for(var key in obj){
-// 			if(obj[key].parent_id == null){
-// 				funcRootAry.push(obj[key]);
-// 				getFunctionByParentId(obj[key]);
-// 			}
-// 		}
+      			//根節點儲存陣列
+				var funcRootAry=[];
 
-// 	  	callback(funcRootAry);
-// 	});
-// }
+				//依照根結點為開始塞入資料搜尋
+					// console.log("obj="+obj);
+				for(var key in user_menu_list){
+					if(user_menu_list[key].parent_id == null){
+						funcRootAry.push(user_menu_list[key]);
+						getFunctionByParentId(user_menu_list[key]);
+					}
+				}
+
+				console.log("funcRootAry="+funcRootAry);
+				callback(funcRootAry);
+
+      		});
+    	});
+  	});
+
+}
+
+//驗證所有"MENU功能"權限
+function verifyFunctionByUser(user_data,role_by_user_data,all_fun_data){
+	// console.log(all_fun_data);
+	if(all_fun_data.length >0){
+		for(var i=0;i< all_fun_data.length;i++){
+			// console.log(role_by_user_data.values);
+			// console.log("1_1"+all_fun_data[i]._id);
+			// console.log(role_by_user_data.values.indexOf(all_fun_data[i]._id));
+			//將role沒有的function移除
+			if(role_by_user_data.values.indexOf(all_fun_data[i]._id)!=-1){
+				user_menu_list.push(all_fun_data[i]);
+				verifyFunctionByUser(user_data,role_by_user_data,all_fun_data[i].function);
+			}
+	    }
+	}
+}
 
 /**
 * 向下搜尋物件
 **/
 function getFunctionByParentId(obj){
+	// console.log("ddd="+obj);
 	var fhm = null;
 	//找出該層是否還有下層，有下層 則向下取物
 	if(fhm = findHashMenu_id(obj._id,obj)){
@@ -73,6 +103,7 @@ function getFunctionByParentId(obj){
 * obj 為上層物件
 **/
 function findHashMenu_id(_id,obj){
+	// console.log("abc=="+obj);
 	var rtnAry = new Array();
 	for(var key in hashMenu){
 		if(hashMenu[key].parent_id==_id){
@@ -84,7 +115,12 @@ function findHashMenu_id(_id,obj){
 	return rtnAry.length>0?rtnAry:null;
 }
 
-
+//驗證使用者連結可用性
+var fun_verifyAvailabilityForUserUrl = function(callback){
+	
+}
 
 //--EXPORT---
 exports.getFunction = fun_getFunction;
+exports.getFunctionByUser = fun_getFunctionByUser;
+exports.verifyAvailabilityForUserUrl = fun_verifyAvailabilityForUserUrl;

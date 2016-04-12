@@ -11,7 +11,8 @@ var fun_getUser = function(obj,callback){
 		// pwd: obj.pwd
 	}, function(err, rtn_obj) {
 	  if (err) throw err;
-	  	if(null!=obj){
+	  // console.log("rtn_obj is "+rtn_obj);
+	  	if(null!=obj && null!=rtn_obj[0] && null!= rtn_obj[0].pwd){
 	  		if(rtn_obj[0].pwd == obj.pwd){
 	  			callback(response.obj(response.codeEnum.OK,rtn_obj));
 	  		}else{
@@ -57,8 +58,45 @@ var fun_emailCheck = function(obj,callback){
 	});
 }
 
+//將user function_crud儲存
+var fun_setFunctionCrud = function(userobj,funObj,callback){
+	usersobj.findById({
+		_id:userobj.values[0]._id,
+	}, function(err, data) {
+	  	if (err) throw err;
+	  	if(null!=data){
+	  		data.function_crud = funObj;
+		  	data.save(function(err) {
+		  		if (err) throw err;
+		  		callback(response.obj(response.codeEnum.OK,data));
+		  	});
+	  	}else{
+	  		callback(response.obj(response.codeEnum.No_Results,false));
+	  	}
+	});
+}
+
+//將user 增加role
+var fun_setUserRole = function(userobj,roleIdAry,callback){
+	usersobj.findById({
+		_id:userobj.values[0]._id,
+	}, function(err, data) {
+	  	if (err) throw err;
+	  	if(null!=data){
+	  		data.role = roleIdAry.values;
+		  	data.save(function(err) {
+		  		if (err) throw err;
+		  		callback(response.obj(response.codeEnum.OK,data));
+		  	});
+	  	}else{
+	  		callback(response.obj(response.codeEnum.No_Results,false));
+	  	}
+	});
+}
 
 //--EXPORT---
 exports.getUser = fun_getUser;
 exports.registered = fun_registered;
 exports.emailCheck = fun_emailCheck;
+exports.setFunctionCrud = fun_setFunctionCrud;
+exports.setUserRole = fun_setUserRole;

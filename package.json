@@ -5,11 +5,13 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.15.0",
+    "connect-redis": "^3.0.2",
     "express": "3.x",
     "express-session": "^1.7.6",
     "jquery": "^2.2.3",
     "mongodb": "^2.1.11",
     "mongoose": "^4.4.10",
     "nconf": "^0.8.4"
-  }
+  },
+  // "main":"index.js"
 }

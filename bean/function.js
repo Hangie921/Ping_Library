@@ -11,6 +11,8 @@ var functionSchema = new Schema({
         type: Array,
         ref: 'function'
     },
+    // function_crud:Schema.Types.Mixed
+    function_crud:Array
 })
 
 var bean_function = mongoose.model('function', functionSchema,'function');

@@ -10,6 +10,7 @@ var rolesobj = require('../../bean/roles');
 var functionobj = require('../../bean/function');
 
 var userService = require('../../service/userService');
+var response = require('../../common/response');
 
 // 0 = disconnected
 // 1 = connected
@@ -32,14 +33,41 @@ var GOD_PWD   	= "!QAZ@WSX";
 var GOD_SYS		= 0;
 
 var roleData = [
-    {"system_parameter":0,"name":"GOD",
+    {"system_parameter":0,"name":"GOD","is_god":true,
     "function":[
-    	"rootno01","rootno02",
+    	"rootno01",
+    	"rootno02",
     	"settingno01","settingno0101","settingno0102","settingno0103",
     	"settingno02",
-    	"memberno01","memberno02","memberno03","memberno0301"
+    	"memberno01",
+    	"memberno02","memberno03","memberno0301"
     ]}
 ];
+
+var adminRoleData = [
+    {"system_parameter":0,"name":"AMDIN",
+    "function":[
+    	"rootno01",
+    	// "rootno02",
+    	"settingno01","settingno0101","settingno0102","settingno0103",
+    	// "settingno02",
+    	// "memberno01",
+    	// "memberno02","memberno03","memberno0301"
+    ]}
+];
+
+var userRoleData = [
+    {"system_parameter":0,"name":"USER",
+    "function":[
+    	// "rootno01",
+    	"rootno02",
+    	// "settingno01","settingno0101","settingno0102","settingno0103",
+    	// "settingno02",
+    	"memberno01",
+    	"memberno02","memberno03","memberno0301"
+    ]}
+];
+
 
 var god = [
         {
@@ -52,6 +80,8 @@ var god = [
         		{function_id:"memberno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
         		{function_id:"memberno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
         		{function_id:"memberno0301","create":true,"read":true,"update":true,"delete":true,"disable":false},
+        		{function_id:"rootno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
+        		// {function_id:"rootno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
         	]
     	}
     ];
@@ -83,40 +113,50 @@ var godSearch = new usersobj({
 });
 
 
-// userService.getUser(godSearch,function (err,data) {
-// 	if(data == ""){
-// 		rolesobj.collection.insertMany(roleData, function(err,r) {
-// 			functionobj.collection.insertMany(funDataRoot,function (errf1,f1_data) {
-// 				// body...
-// 			});
-// 			functionobj.collection.insertMany(funDataR2,function (errf2,f2_data) {
-// 				// body...
-// 			});
-// 			functionobj.collection.insertMany(funDataR3,function (errf3,f3_data) {
-// 				// body...
-// 			});
+userService.getUser(godSearch,function (data) {
 
-// 			usersobj.collection.insertMany(god, function(m_err,user_data) {
+	if(response.codeEnum.OK != data.code){
+		rolesobj.collection.insertMany(roleData, function(err,r) {
+			functionobj.collection.insertMany(funDataRoot,function (errf1,f1_data) {
+				// body...
+			});
+			functionobj.collection.insertMany(funDataR2,function (errf2,f2_data) {
+				// body...
+			});
+			functionobj.collection.insertMany(funDataR3,function (errf3,f3_data) {
+				// body...
+			});
+
+			usersobj.collection.insertMany(god, function(m_err,user_data) {
 
 
-// 				user_data.insertedIds.forEach(function(argument) {
-// 		            // console.log("role==step1=>"+argument);
+				user_data.insertedIds.forEach(function(argument) {
+		            // console.log("role==step1=>"+argument);
 
-// 		            usersobj.findById(argument, function(err, user) {
-// 		                if(null != user){
-// 		                  user.role = r.insertedIds[0];
+		            usersobj.findById(argument, function(err, user) {
+		                if(null != user){
+		                  user.role = r.insertedIds[0];
 
-// 		                  user.save(function (argument) {
-// 		                    if (err) throw err;
-// 		                    console.log('God create!');
-// 		                  });
-// 		                }
-// 		            });
-// 		        });
-// 			 });
-// 		});
-// 	}
-// });
+		                  user.save(function (argument) {
+		                    if (err) throw err;
+		                    console.log('God create!');
+		                  });
+		                }
+		            });
+		        });
+			 });
+		});
+
+		rolesobj.collection.insertMany(adminRoleData, function(err,r) {
+
+		});
+
+		rolesobj.collection.insertMany(userRoleData, function(err,r) {
+
+		});
+	}
+
+});
 
 
 
