@@ -10,6 +10,6 @@ var roleSchema = new Schema({
 	function:Array
 })
 
-var bean_role = mongoose.model('roles', roleSchema);
+var bean_role = mongoose.model('role', roleSchema);
 
 module.exports = bean_role;
