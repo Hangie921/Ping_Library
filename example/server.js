@@ -1,15 +1,40 @@
 var express = require('express');
 // var gengod = require('../common/generate/god');
+
+var bodyParser=require('body-parser');
+var cookieParser = require('cookie-parser');
+// var session      = require('express-session');
+// var MongoStore = require('connect-mongo')(session);
 var app = express();
 
 var mytest = require('../test/mytest');
 
-var mongoose = require("mongoose");
-if (process.argv[2] == '--local') {
-    var url = 'mongodb://localhost/test';
-} else {
-    var url = 'mongodb://192.168.60.65/test';
-}
+
+app.use(bodyParser());
+app.use(cookieParser());
+
+
+
+// var mongoose = require("mongoose");
+// if (process.argv[2] == '--local') {
+//     var url = 'mongodb://localhost/test';
+// } else {
+//     var url = 'mongodb://192.168.60.65/test';
+
+//     app.use(session({
+//         cookie: { maxAge: 1000*60*2 } ,
+//         secret: "session secret" ,
+//         store:new MongoStore({
+//                 db: 'test',
+//                 host: '192.168.60.65',
+//                 port: 27019,  
+//                 // username: 'cm',
+//                 // password: 'cm', 
+//                 collection: 'session', 
+//                 auto_reconnect:true
+//         })
+//     }));
+// }
 
 console.log("connect to " + url);
 mongoose.connect(url);
