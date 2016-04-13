@@ -4,6 +4,8 @@ var response = require('../common/response');
 
 
 //--PUBLIC FUNCTION---
+// callback(data);
+// callback(200,user);
 var fun_getUser = function(obj,callback){
 	usersobj.find({
 		system_parameter:obj.system_parameter,

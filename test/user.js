@@ -1,25 +1,27 @@
 var async = require('async');
-var should = require('should');
+var should = require('chai').should();
 var mongoose = require('mongoose');
 var mongodb = 'mongodb://localhost/test';
 
 var User = require('../bean/users.js');
 
 describe('User', function() {
-    var testUser = new User();
-    testUser.system_parameter = 0;
-    testUser.id_number = "god"
-    testUser.email = 'god@ping.com.sg';
-    testUser.name = '上帝';
-    testUser.pwd = '!QAZ@WSX';
-    testUser.function_crud = '!QAZ@WSX';
+    function newUser() {
+        var user = new User();
+        user.system_parameter = 0;
+        user.id_number = "god"
+        user.email = 'god@ping.com.sg';
+        user.name = '上帝';
+        user.pwd = '!QAZ@WSX';
+        return user;
+    }
 
     beforeEach(function(done) {
         function clearDB() {
             for (var i in mongoose.connection.collections) {
                 mongoose.connection.collections[i].remove(function() {});
             }
-            console.log("cleanDB()");
+            // console.log("cleanDB()");
             return done();
         }
 
@@ -35,24 +37,30 @@ describe('User', function() {
     });
 
 
-    afterEach(function(done) {
+    after(function() {
+        // afterEach(function(done) {
         mongoose.disconnect();
-        return done();
+        // return done();
     });
 
     describe('#say()', function() {
         it('should return God name + "-dude"', function(done) {
-            (testUser.say()).should.be.exactly('上帝-dude').and.be.a.String();
+            var testUser = newUser();
+            (testUser.say()).should.equal('上帝-dude');
+            // (testUser.say()).should.be.a.null;
             done();
         });
     });
     describe('#save()', function() {
         it('should return a Object', function(done) {
+            var testUser = newUser();
             testUser.save(function(err, user) {
-                console.log(user);
-                (user).should.be.a.Object();
-                // console.log("err.msg", err.message)
-                // console.log("err", err)
+                (user).should.be.a('object');
+                (user.system_parameter).should.be.a('number');
+                (user.id_number).should.be.a('string');
+                (user.name).should.be.a('string');
+                (user.email).should.be.a('string');
+                (user.pwd).should.be.a('string');
                 done();
             });
         });
@@ -60,41 +68,25 @@ describe('User', function() {
 
             // @Bug : need try multuple save()
             async.series({
-                    one: function(callback) {
-                        testUser.save(function(err, user) {
-                            console.log(user);
-                            // (user).should.be.a.Object();
-                            // console.log("err.msg", err.message)
-                            console.log("err", err)
-                        });
-                        callback(null, 1);
-                    },
-                    two: function(callback) {
-
-                        testUser.save(function(err, user) {
-                            console.log(user);
-                            // (user).should.be.a.Object();
-                            // console.log("err.msg", err.message)
-                            console.log("err", err)
-                        });
-                        callback(null, 2);
-                    }
+                save: function(callback) {
+                    var testUser = newUser();
+                    testUser.save(function(err, user) {
+                        callback(null, "123");
+                    });
                 },
-                function(err, results) {
-                    if (err) {
-                        console.log("err", err)
-                    }
-                    // results is now equal to: {one: 1, two: 2}
-                    done();
-                    console.log(results);
-                });
+                errorSave: function(callback) {
+                    var testUser = newUser();
+                    testUser.save(function(err, user) {
+                        (err.errmsg).should.not.be.null;
+                        (err.errmsg).should.contain('duplicate');
+                        callback(null, err.errmsg);
+                    });
+                }
+            }, function(err, results) {
+                // console.log("res", results);
+                done();
+            });
 
-            // testUser.save(function(err, user) {
-            //     console.log(user);
-            //     // (user).should.be.a.Object();
-            //     // console.log("err.msg", err.message)
-            //     console.log("err", err);
-            // });
         });
     });
 });
