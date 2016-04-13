@@ -3,10 +3,11 @@ var should = require('chai').should();
 var mongoose = require('mongoose');
 var mongodb = 'mongodb://localhost/test';
 
-var pinglib = require('../index.js');
+var pinglib = require('../../index.js');
 var User = pinglib.User;
+var UserService = pinglib.UserService;
 
-describe('User', function() {
+describe('UserService', function() {
     function newUser() {
         var user = new User();
         user.system_parameter = 0;
@@ -44,28 +45,8 @@ describe('User', function() {
         // return done();
     });
 
-    describe('#say()', function() {
-        it('should return God name + "-dude"', function(done) {
-            var testUser = newUser();
-            (testUser.say()).should.equal('上帝-dude');
-            // (testUser.say()).should.be.a.null;
-            done();
-        });
-    });
-    describe('#save()', function() {
-        it('should return a Object', function(done) {
-            var testUser = newUser();
-            testUser.save(function(err, user) {
-                (user).should.be.a('object');
-                (user.system_parameter).should.be.a('number');
-                (user.id_number).should.be.a('string');
-                (user.name).should.be.a('string');
-                (user.email).should.be.a('string');
-                (user.pwd).should.be.a('string');
-                done();
-            });
-        });
-        it('should return a error msg when user is already existed', function(done) {
+    describe('#customizeUser(user, function(data))', function() {
+        it('update a custom data for "God" ', function(done) {
 
             // @Bug : need try multuple save()
             async.series({
@@ -75,13 +56,23 @@ describe('User', function() {
                         callback();
                     });
                 },
-                errorSave: function(callback) {
+                update: function(callback) {
                     var testUser = newUser();
-                    testUser.save(function(err, user) {
-                        (err.errmsg).should.not.be.null;
-                        (err.errmsg).should.contain('duplicate');
-                        callback(null, err.errmsg);
-                    });
+                    testUser.custom = { _company: '1234' };
+                    (testUser).should.be.a('object');
+                    // console.log(testUser.custom);
+                    testUser.should.have.deep.property('custom._company', '1234');
+
+                    UserService.customizeUser(testUser, function(data) {
+                        (data).should.be.a('object');
+                        (data.system_parameter).should.be.equal(testUser.system_parameter);
+                        (data.id_number).should.be.equal(testUser.id_number);
+                        (data.email).should.be.equal(testUser.email);
+                        (data.name).should.be.equal(testUser.name);
+                        (data.pwd).should.be.equal(testUser.pwd);
+                        (data).should.hava.property('custom');
+                        callback();
+                    })
                 }
             }, function(err, results) {
                 // console.log("res", results);
