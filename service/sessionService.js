@@ -11,18 +11,22 @@ var session_login = function(req, res, obj, callback) {
     userService.getUser(obj, function(data) {
         if (data.code === 200) {
             async.series({
-            	user:function (callback) {
-	                req.session.user = data.values;
-	                try {
-	                    delete data.values.pwd;
-	                } catch (e) {}
-            	},
-            	role:function (callback) {
-            		
-            	},
-            	func:function (callback) {
-            		
-            	}
+                user: function(callback) {
+                    req.session.user = data.values;
+                    try {
+                        delete data.values.pwd;
+                    } catch (e) {
+                    	console.log(e);
+                    }
+                    callback();
+                },
+                func: function(callback) {
+                	//取得user的menu
+                    functionService.getFunctionByUser(data.values, function(func_data) {
+                        req.session.func = func_data.values;
+                    });
+                    callback();
+                }
 
             }, function(err, results) {
                 // console.log("res", results);
@@ -30,7 +34,6 @@ var session_login = function(req, res, obj, callback) {
             });
         } else {
             req.session.user = null;
-            req.session.role = null;
             req.session.func = null;
         }
 
@@ -50,10 +53,23 @@ var session_getUserSession = function(req, res, callback) {
     }
 }
 
+var session_getFunctionSession = function(req, res, callback) {
+    try {
+        if (req.session.func === null) {
+            callback(response.obj(response.codeEnum.Not_Found, null));
+        } else {
+            callback(response.obj(response.codeEnum.OK, req.session.func));
+        }
+    } catch (e) {
+        callback(response.obj(response.codeEnum.Not_Found, null));
+    }
+}
+
 
 var session_cleanUserSession = function(req, res, callback) {
     try {
         req.session.user = null;
+        req.session.func = null;
         callback(response.obj(response.codeEnum.OK, req.session.user));
     } catch (e) {
         callback(response.obj(response.codeEnum.Not_Found, null));
@@ -63,4 +79,5 @@ var session_cleanUserSession = function(req, res, callback) {
 
 exports.login = session_login;
 exports.getUserSession = session_getUserSession;
+exports.getFunctionSession = session_getFunctionSession;
 exports.cleanUserSession = session_cleanUserSession;
