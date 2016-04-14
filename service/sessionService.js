@@ -21,24 +21,23 @@ var session_login = function(req, res, obj, callbackUser) {
                     callback();
                 },
                 func: function(callback) {
-                    //取得user的menu
-                    functionService.getFunctionByUser(data.values, function(func_data) {
-                        req.session.func = func_data.values;
+                    //取得user的menu(這個method取了第二次的USER TODO)
+                    functionService.getFunctionByUser(obj, function(func_data) {
+                        req.session.func = func_data;
+
+                    	callback();
                     });
-                    callback();
                 }
 
             }, function(err, results) {
-                // console.log("res", results);
+        		callbackUser(data);
             });
         } else {
             req.session.user = null;
             req.session.func = null;
+            callbackUser(data);
         }
-        console.log("step2~"+data.values+"||");
 
-
-        callbackUser(data);
     });
 }
 
@@ -56,6 +55,7 @@ var session_getUserSession = function(req, res, callback) {
 
 var session_getFunctionSession = function(req, res, callback) {
     try {
+    	// console.log("session_getFunctionSession>>>>>"+req.session.func);
         if (req.session.func === null) {
             callback(response.obj(response.codeEnum.Not_Found, null));
         } else {

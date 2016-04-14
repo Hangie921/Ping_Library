@@ -56,7 +56,7 @@ var fun_getFunctionByUser = function(obj,callback){
 					}
 				}
 
-				console.log("funcRootAry="+funcRootAry);
+				// console.log("funcRootAry="+funcRootAry);
 				callback(funcRootAry);
 
       		});
