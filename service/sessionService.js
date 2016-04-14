@@ -1,3 +1,4 @@
+var async = require('async');
 var userService = require('./userService');
 var functionService = require('./functionService');
 var roleService = require('./roleService');
@@ -8,10 +9,31 @@ var response = require('../common/response');
 //--PUBLIC FUNCTION---
 var session_login = function(req, res, obj, callback) {
     userService.getUser(obj, function(data) {
-        req.session.user = data.code === 200 ? data.values : null;
-        try {
-            delete data.values.pwd;
-        } catch (e) {}
+        if (data.code === 200) {
+            async.series({
+            	user:function (callback) {
+	                req.session.user = data.values;
+	                try {
+	                    delete data.values.pwd;
+	                } catch (e) {}
+            	},
+            	role:function (callback) {
+            		
+            	},
+            	func:function (callback) {
+            		
+            	}
+
+            }, function(err, results) {
+                // console.log("res", results);
+                done();
+            });
+        } else {
+            req.session.user = null;
+            req.session.role = null;
+            req.session.func = null;
+        }
+
         callback(data);
     });
 }
