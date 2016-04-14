@@ -1,5 +1,5 @@
 //--DEFINE---
-var usersobj = require('../bean/users');
+var User = require('../bean/users');
 var response = require('../common/response');
 
 
@@ -7,7 +7,7 @@ var response = require('../common/response');
 // callback(data);
 // callback(200,user);
 var fun_getUser = function(obj,callback){
-	usersobj.find({
+	User.find({
 		system_parameter:obj.system_parameter,
 		email : obj.email,
 		// pwd: obj.pwd
@@ -28,7 +28,7 @@ var fun_getUser = function(obj,callback){
 
 //--PUBLIC FUNCTION---
 var fun_registered = function(obj,callback){
-	usersobj.findOne({
+	User.findOne({
 		system_parameter:obj.system_parameter,
 		email : obj.email
 	}, function(err, data) {
@@ -47,7 +47,7 @@ var fun_registered = function(obj,callback){
 
 //--PUBLIC FUNCTION---
 var fun_emailCheck = function(obj,callback){
-	usersobj.findOne({
+	User.findOne({
 		system_parameter:obj.system_parameter,
 		email : obj.email
 	}, function(err, data) {
@@ -62,7 +62,7 @@ var fun_emailCheck = function(obj,callback){
 
 //將user function_crud儲存
 var fun_setFunctionCrud = function(userobj,funObj,callback){
-	usersobj.findById({
+	User.findById({
 		_id:userobj.values[0]._id,
 	}, function(err, data) {
 	  	if (err) throw err;
@@ -80,7 +80,7 @@ var fun_setFunctionCrud = function(userobj,funObj,callback){
 
 //將user 增加role
 var fun_setUserRole = function(userobj,roleIdAry,callback){
-	usersobj.findById({
+	User.findById({
 		_id:userobj.values[0]._id,
 	}, function(err, data) {
 	  	if (err) throw err;
@@ -96,9 +96,26 @@ var fun_setUserRole = function(userobj,roleIdAry,callback){
 	});
 }
 
+
+var fun_customizeUser = function(userobj,callback){
+	if(null!=userobj && null!==userobj.custom){
+		console.log("data input..."+userobj);
+		User.findByOneAndUpdate({_id:userobj._id},userobj, function(err, data) {
+		  	// if (err) throw err;
+		  	console.log("fun_customizeUser "+ data);
+		  	if(null!=data){
+		  		callback(response.obj(response.codeEnum.OK,req.session.user));
+		  	}else{
+		  		callback(response.obj(response.codeEnum.Not_Found,null));
+		  	}
+		});
+	}
+}
+
 //--EXPORT---
 exports.getUser = fun_getUser;
 exports.registered = fun_registered;
 exports.emailCheck = fun_emailCheck;
 exports.setFunctionCrud = fun_setFunctionCrud;
 exports.setUserRole = fun_setUserRole;
+exports.customizeUser = fun_customizeUser;
