@@ -1,5 +1,5 @@
 //--DEFINE---
-var functionobj = require('../bean/function');
+var Func = require('../bean/function');
 
 var userService = require('./userService');
 var roleService = require('./roleService');
@@ -8,7 +8,7 @@ var roleService = require('./roleService');
 var hashMenu = null;
 //--PUBLIC FUNCTION---
 var fun_getFunction = function(obj,callback){
-	functionobj.find({
+	Func.find({
 		system_parameter:obj.system_parameter,
 		// parent_id:obj.parent_id
 	}, function(err, obj) {

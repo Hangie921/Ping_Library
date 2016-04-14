@@ -1,5 +1,5 @@
 //--DEFINE---
-var roleobj = require('../bean/roles');
+var Role = require('../bean/roles');
 var response = require('../common/response');
 var mongoose = require('mongoose');
 
@@ -8,7 +8,7 @@ var fun_getRoleById = function(role_id,callback){
 	// console.log("fun_getRoleById="+role_id);
 	///這段搭配 myTest.js role_id_ary多筆  會有問題  再試試看
 	//try async *******
-	roleobj.findById({
+	Role.findById({
 		// _id:{$in:role_id}
 		_id:role_id
 	}, function(err, data) {
@@ -24,7 +24,7 @@ var fun_getRoleById = function(role_id,callback){
 
 var fun_getRoleBySys = function(sys_parameter,callback){
 	// console.log(sys_parameter);
-	roleobj.find({
+	Role.find({
 		system_parameter:sys_parameter
 	}, function(err, data) {
 	  	if (err) throw err;
@@ -45,7 +45,7 @@ var fun_getRoleFunByUser = function(obj,callback){
 		}
 		// console.log("ids=="+ids);
 
-		roleobj.find({
+		Role.find({
 			_id:{$in:ids}
 		}, function(err, obj) {
 			if (err) {

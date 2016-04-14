@@ -1,7 +1,14 @@
 var async = require('async');
 var should = require('chai').should();
 var mongoose = require('mongoose');
-var mongodb = 'mongodb://localhost/test';
+var mongodb = null;
+
+
+if (process.argv[2] == '--local') {
+    mongodb = 'mongodb://localhost/test';
+} else {
+    mongodb = 'mongodb://192.168.60.65/unitest';
+}
 
 var pinglib = require('../../index.js');
 var User = pinglib.User;
@@ -49,28 +56,27 @@ describe('UserService', function() {
         it('update a custom data for "God" ', function(done) {
 
             // @Bug : need try multuple save()
+            var testUser = newUser();
             async.series({
                 save: function(callback) {
-                    var testUser = newUser();
                     testUser.save(function(err, user) {
+                        console.log("save user = " + user._id);
                         callback();
                     });
                 },
                 update: function(callback) {
-                    var testUser = newUser();
                     testUser.custom = { _company: '1234' };
                     (testUser).should.be.a('object');
                     // console.log(testUser.custom);
                     testUser.should.have.deep.property('custom._company', '1234');
-
                     UserService.customizeUser(testUser, function(data) {
-                        (data).should.be.a('object');
-                        (data.system_parameter).should.be.equal(testUser.system_parameter);
-                        (data.id_number).should.be.equal(testUser.id_number);
-                        (data.email).should.be.equal(testUser.email);
-                        (data.name).should.be.equal(testUser.name);
-                        (data.pwd).should.be.equal(testUser.pwd);
-                        (data).should.hava.property('custom');
+                        (data.values).should.be.a('object');
+                        (data.values.system_parameter).should.be.equal(testUser.system_parameter);
+                        (data.values.id_number).should.be.equal(testUser.id_number);
+                        (data.values.email).should.be.equal(testUser.email);
+                        (data.values.name).should.be.equal(testUser.name);
+                        (data.values.pwd).should.be.equal(testUser.pwd);
+                        // (data.values).should.have.property('custom','_company');
                         callback();
                     })
                 }

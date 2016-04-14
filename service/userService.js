@@ -99,12 +99,11 @@ var fun_setUserRole = function(userobj,roleIdAry,callback){
 
 var fun_customizeUser = function(userobj,callback){
 	if(null!=userobj && null!==userobj.custom){
-		console.log("data input..."+userobj);
-		User.findByOneAndUpdate({_id:userobj._id},userobj, function(err, data) {
+		User.findByIdAndUpdate(userobj._id,userobj, {new: true},function(err, data) {
 		  	// if (err) throw err;
 		  	console.log("fun_customizeUser "+ data);
 		  	if(null!=data){
-		  		callback(response.obj(response.codeEnum.OK,req.session.user));
+		  		callback(response.obj(response.codeEnum.OK,data));
 		  	}else{
 		  		callback(response.obj(response.codeEnum.Not_Found,null));
 		  	}
