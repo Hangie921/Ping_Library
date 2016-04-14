@@ -23,6 +23,21 @@ userSchema.methods.say = function() {
     return this.name + '-dude';
 };
 
+// userSchema.methods.getRefs = function(callback) {
+//     // add some stuff to the users name
+//     return this.model('company').findById(this.custom._company, function(err, data) {
+//         callback(data);
+//     });
+// };
+
+userSchema.methods.getRefs = function(arr, callback) {
+    console.log("arr=" + arr);
+    var user = this;
+    return this.model('company').findById(this.custom[arr[0]], function(err, data) {
+        user.custom[arr[0]] = data;
+        callback(user);
+    });
+};
 
 userSchema.index({ system_parameter: 1, email: 1 }, { unique: true });
 

@@ -3,16 +3,17 @@ var should = require('chai').should();
 var mongoose = require('mongoose');
 var mongodb = null;
 
-
-if (process.argv[2] == '--local') {
-    mongodb = 'mongodb://localhost/test';
-} else {
-    mongodb = 'mongodb://192.168.60.65/unitest';
-}
+mongodb = 'mongodb://localhost/test';
+// mongodb = 'mongodb://192.168.60.65/unitest';
 
 var pinglib = require('../../index.js');
 var User = pinglib.User;
 var UserService = pinglib.UserService;
+
+function output(msg) {
+    if (true)
+        console.log(msg);
+}
 
 describe('UserService', function() {
     function newUser() {
@@ -30,7 +31,7 @@ describe('UserService', function() {
             for (var i in mongoose.connection.collections) {
                 mongoose.connection.collections[i].remove(function() {});
             }
-            // console.log("cleanDB()");
+            // output("cleanDB()");
             return done();
         }
 
@@ -60,14 +61,14 @@ describe('UserService', function() {
             async.series({
                 save: function(callback) {
                     testUser.save(function(err, user) {
-                        console.log("save user = " + user._id);
+                        output("save user = " + user._id);
                         callback();
                     });
                 },
                 update: function(callback) {
                     testUser.custom = { _company: '1234' };
                     (testUser).should.be.a('object');
-                    // console.log(testUser.custom);
+                    // output(testUser.custom);
                     testUser.should.have.deep.property('custom._company', '1234');
                     UserService.customizeUser(testUser, function(data) {
                         (data.values).should.be.a('object');
@@ -81,10 +82,52 @@ describe('UserService', function() {
                     })
                 }
             }, function(err, results) {
-                // console.log("res", results);
+                // output("res", results);
                 done();
             });
 
+        });
+    });
+
+    describe('#getUserAll(user, function(data))', function() {
+
+        var Company = mongoose.model('company', new mongoose.Schema({
+            // _id: mongoose.Schema.Types.ObjectId,
+            name: String,
+            description: String
+        }));
+
+        var company = new Company();
+        company.name = "Ping";
+        company.description = "vary good";
+
+        var user = newUser();
+        user.custom = { _company: company._id };
+
+        it('get user\'s all data include references', function(done) {
+            async.series([
+                function save(callback) {
+
+                    user.save(company, function(err, data) {
+                        output("user = " + data);
+                    });
+                    company.save(company, function(err, data) {
+                        output("company = " + data);
+                    });
+                    callback();
+                },
+                function load(callback) {
+                    user.getRefs(['_company', '_talent'],function(data) {
+                        output("getRef = " + data);
+                    });
+                    callback();
+                }
+            ], function(err, results) {
+                done();
+            })
+
+
+            output(user);
         });
     });
 });

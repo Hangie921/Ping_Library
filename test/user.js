@@ -52,6 +52,7 @@ describe('User', function() {
             done();
         });
     });
+
     describe('#save()', function() {
         it('should return a Object', function(done) {
             var testUser = newUser();
@@ -90,4 +91,5 @@ describe('User', function() {
 
         });
     });
+
 });
