@@ -8,6 +8,7 @@
     "body-parser": "^1.15.0",
     "chai": "^3.5.0",
     "connect-redis": "^3.0.2",
+    "cookie-parser": "^1.4.1",
     "express": "3.x",
     "express-session": "^1.7.6",
     "jquery": "^2.2.3",
