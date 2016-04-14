@@ -7,7 +7,7 @@ var usersobj = require('../bean/users');
 var response = require('../common/response');
 
 //--PUBLIC FUNCTION---
-var session_login = function(req, res, obj, callback) {
+var session_login = function(req, res, obj, callbackUser) {
     userService.getUser(obj, function(data) {
         if (data.code === 200) {
             async.series({
@@ -16,12 +16,12 @@ var session_login = function(req, res, obj, callback) {
                     try {
                         delete data.values.pwd;
                     } catch (e) {
-                    	console.log(e);
+                        console.log(e);
                     }
                     callback();
                 },
                 func: function(callback) {
-                	//取得user的menu
+                    //取得user的menu
                     functionService.getFunctionByUser(data.values, function(func_data) {
                         req.session.func = func_data.values;
                     });
@@ -30,14 +30,15 @@ var session_login = function(req, res, obj, callback) {
 
             }, function(err, results) {
                 // console.log("res", results);
-                done();
             });
         } else {
             req.session.user = null;
             req.session.func = null;
         }
+        console.log("step2~"+data.values+"||");
 
-        callback(data);
+
+        callbackUser(data);
     });
 }
 
