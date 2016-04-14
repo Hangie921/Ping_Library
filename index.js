@@ -7,7 +7,7 @@ main.Func = require('./bean/function');
 main.UserService = require('./service/userService');
 main.RoleService = require('./service/roleService');
 main.FunctioService = require('./service/functionService');
+main.SessionService = require('./service/sessionService');
 
 main.response = require('./common/response');
-main.sessionService = require('./service/sessionService');
 module.exports = main;
