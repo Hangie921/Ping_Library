@@ -30,11 +30,20 @@ userSchema.methods.say = function() {
 //     });
 // };
 
-userSchema.methods.getRefs = function(arr, callback) {
-    console.log("arr=" + arr);
+// { collectionName: custom.key}
+// { company: "_company"}
+userSchema.methods.getRefs = function(conditions, callback) {
     var user = this;
-    return this.model('company').findById(this.custom[arr[0]], function(err, data) {
-        user.custom[arr[0]] = data;
+    if (Object.keys(conditions).length === 0 ) {
+        return callback({});
+    }
+    var collectionName = Object.keys(conditions)[0];
+    var customKey = conditions[collectionName];
+
+    // @Todo(20160415): 目前只有join一張table，之後要join多張
+    return this.model(collectionName).findById(this.custom[customKey], function(err, data) {
+        if (err) console.log(err);
+        user.custom[customKey] = data;
         callback(user);
     });
 };

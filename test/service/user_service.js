@@ -78,6 +78,7 @@ describe('UserService', function() {
                         (data.values.name).should.be.equal(testUser.name);
                         (data.values.pwd).should.be.equal(testUser.pwd);
                         // (data.values).should.have.property('custom','_company');
+                        (data.values).should.have.deep.property('custom._company', '1234');
                         callback();
                     })
                 }
@@ -109,15 +110,19 @@ describe('UserService', function() {
                 function save(callback) {
 
                     user.save(company, function(err, data) {
-                        output("user = " + data);
+                        // output("user = " + data);
                     });
                     company.save(company, function(err, data) {
-                        output("company = " + data);
+                        // output("company = " + data);
                     });
                     callback();
                 },
                 function load(callback) {
-                    user.getRefs(['_company', '_talent'],function(data) {
+                    var condition = {
+                        company: "_company",
+                        talent: "_talent"
+                    };
+                    user.getRefs(condition, function(data) {
                         output("getRef = " + data);
                     });
                     callback();
@@ -126,8 +131,6 @@ describe('UserService', function() {
                 done();
             })
 
-
-            output(user);
         });
     });
 });
