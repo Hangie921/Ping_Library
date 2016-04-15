@@ -228,10 +228,6 @@ var funObj = new functionobj({
 //   });
 // });
 
-//取得UserFunction
-// sessionManager.getMenuByUser(userReg, function (data) {
-//   console.log(data.values);
-// });
 
 
 // sessionManager.login(usrSearch,function (data) {
@@ -257,6 +253,20 @@ var funObj = new functionobj({
 //  console.log("usrSearch is "+data.values);
 // });
 
+
+//取得UserFunction
+sessionManager.getMenuByUser(userReg, function (data) {
+  console.log(data.values);
+
+  //   // //--根目錄
+    for(var key in data.values){
+      if(data.values[key].parent_id == null){
+        // console.log(data[key].function.toString());
+        console.log(data.values[key].toString());
+        console.log("-----------------------------------------");
+      }
+    }
+});
 
   //--第二層印製
   // sessionManager.getMenu(funObj,function (data) {

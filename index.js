@@ -2,11 +2,13 @@ var gengod = require('./common/generate/god');
 var main = require('./interface/session.js');
 main.User = require('./bean/users');
 main.Role = require('./bean/roles');
-main.Func = require('./bean/function');
+// main.Func = require('./bean/function');
+main.Menu = require('./bean/menu');
 
 main.UserService = require('./service/userService');
 main.RoleService = require('./service/roleService');
-main.FunctioService = require('./service/functionService');
+// main.FunctioService = require('./service/functionService');
+main.MenuService = require('./service/menuService');
 main.SessionService = require('./service/sessionService');
 
 main.response = require('./common/response');

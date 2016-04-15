@@ -56,7 +56,7 @@ var fun_getMenuByUser = function(obj, callback) {
                     if (user_menu_list[key].parent_id == null) {
                         // console.log(user_menu_list[key]);
                         menuRootAry.push(user_menu_list[key]);
-                        getMenuByParentId(user_menu_list[key]);
+                        // getMenuByParentId(user_menu_list[key]);
                     }
                 }
                 // console.log("all_fun_data(step3)=" + all_fun_data);
