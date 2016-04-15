@@ -61,13 +61,13 @@ var fun_emailCheck = function(obj,callback){
 }
 
 //將user function_crud儲存
-var fun_setFunctionCrud = function(userobj,funObj,callback){
+var fun_setMenuCrud = function(userobj,menuObj,callback){
 	User.findById({
 		_id:userobj.values[0]._id,
 	}, function(err, data) {
 	  	if (err) throw err;
 	  	if(null!=data){
-	  		data.function_crud = funObj;
+	  		data.menu_crud = menuObj;
 		  	data.save(function(err) {
 		  		if (err) throw err;
 		  		callback(response.obj(response.codeEnum.OK,data));
@@ -115,6 +115,6 @@ var fun_customizeUser = function(userobj,callback){
 exports.getUser = fun_getUser;
 exports.registered = fun_registered;
 exports.emailCheck = fun_emailCheck;
-exports.setFunctionCrud = fun_setFunctionCrud;
+exports.setMenuCrud = fun_setMenuCrud;
 exports.setUserRole = fun_setUserRole;
 exports.customizeUser = fun_customizeUser;

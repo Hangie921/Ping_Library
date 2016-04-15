@@ -150,29 +150,29 @@ var usrSearch = new usersobj({
   system_parameter: 0,
   email: 'mbs002@ping.com.sg',
   pwd:'ACDE',
-  function_crud:[
-            {function_id:"settingno0101","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"settingno0102","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"settingno0103","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"settingno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"memberno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"memberno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"memberno0301","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"rootno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"rootno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+  menu_crud:[
+            {menu_id:"settingno0101","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"settingno0102","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"settingno0103","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"settingno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"memberno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"memberno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"memberno0301","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"rootno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"rootno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
           ]
 });
 
 var function_crud = [
-            {function_id:"settingno0101","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"settingno0102","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"settingno0103","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"settingno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"memberno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"memberno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"memberno0301","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"rootno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
-            {function_id:"rootno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"settingno0101","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"settingno0102","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"settingno0103","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"settingno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"memberno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"memberno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"memberno0301","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"rootno01","create":true,"read":true,"update":true,"delete":true,"disable":false},
+            {menu_id:"rootno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
           ]
 
 //呼叫API
@@ -200,9 +200,9 @@ var funObj = new functionobj({
 //   console.log("roleBySys="+data.values);
 // });
 
-sessionManager.getRoleFunByUser(userReg, function (data) {
-  console.log("getRoleFunByUser="+data.values);
-});
+// sessionManager.getRoleFunByUser(userReg, function (data) {
+//   console.log("getRoleFunByUser="+data.values);
+// });
 
 // sessionManager.registered(userReg,function (data) {
 //  console.log("registered====>"+data.values);
@@ -211,15 +211,15 @@ sessionManager.getRoleFunByUser(userReg, function (data) {
 //將USER 輸入function_crud
 // sessionManager.getUser(userReg, function (usrObj) {
 //   console.log("getUser... "+usrObj.values);
-//   sessionManager.setFunctionCrud(usrObj,function_crud,function (data) {
+//   sessionManager.setMenuCrud(usrObj,function_crud,function (data) {
 //     console.log("setFunction... "+data.values);
 
 //   });
 // });
 
-var role_id_ary = ['570746898af057fc456b2fc7','570746898af057fc456b2fc8'];
-var role_id_ary = ['570746898af057fc456b2fc8'];
-//將USER 輸入Role
+// var role_id_ary = ['570746898af057fc456b2fc7','570746898af057fc456b2fc8'];
+// var role_id_ary = ['5710b68b07c6c10065a7e464'];
+// //將USER 輸入Role
 // sessionManager.getUser(userReg, function (usrObj) {
 //   // console.log("getUser... "+usrObj.values);
 //   sessionManager.setUserRole(usrObj,role_id_ary,function (data) {
@@ -229,7 +229,7 @@ var role_id_ary = ['570746898af057fc456b2fc8'];
 // });
 
 //取得UserFunction
-// sessionManager.getFunctionByUser(god, function (data) {
+// sessionManager.getMenuByUser(userReg, function (data) {
 //   console.log(data.values);
 // });
 
@@ -252,14 +252,14 @@ var role_id_ary = ['570746898af057fc456b2fc8'];
 // 		console.log(data);
 // });
 
-//取得使用者資訊  包括function_crud
+//取得使用者資訊  包括menu_crud
 // sessionManager.getUser(userReg, function (data) {
 //  console.log("usrSearch is "+data.values);
 // });
 
 
   //--第二層印製
-  // sessionManager.getFunction(funObj,function (data) {
+  // sessionManager.getMenu(funObj,function (data) {
   //   // console.log(data);
 
   // //   // //--根目錄

@@ -57,7 +57,7 @@ var fun_getRoleFunByUser = function(obj,callback){
 				var outputArray = [];
 				for(var roleIndex in obj){
 					// console.log(obj[roleIndex]);
-					getUnique(outputArray,obj[roleIndex].function);
+					getUnique(outputArray,obj[roleIndex].menu);
 				}
 				callback(response.obj(response.codeEnum.OK,outputArray));
 			}else{

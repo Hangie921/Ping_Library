@@ -1,5 +1,5 @@
 var express = require('express');
-// var gengod = require('../common/generate/god');
+var gengod = require('../common/generate/god');
 
 var bodyParser=require('body-parser');
 var cookieParser = require('cookie-parser');

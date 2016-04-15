@@ -5,7 +5,8 @@ var RedisStore = require('connect-redis')(expressSession);
 var response = require('../common/response');
 
 var userService = require('../service/userService');
-var functionService = require('../service/functionService');
+// var functionService = require('../service/functionService');
+var menuService = require('../service/menuService');
 var roleService = require('../service/roleService');
 
 module.exports = function Sessions(url, secret) {
@@ -83,26 +84,26 @@ var session_getRoleFunByUser = function(userObj,callback){
 };
 module.exports.getRoleFunByUser = session_getRoleFunByUser;
 
-var session_getFunction = function(funObj,callback){
-	functionService.getFunction(funObj,function(data) {
+var session_getMenu = function(funObj,callback){
+	menuService.getMenu(funObj,function(data) {
 		callback(response.obj(response.codeEnum.OK,data));
 	});
 };
-module.exports.getFunction = session_getFunction;
+module.exports.getMenu = session_getMenu;
 
-var session_getFunctionByUser = function(userobj,callback){
-	functionService.getFunctionByUser(userobj,function(data) {
+var session_getMenuByUser = function(userobj,callback){
+	menuService.getMenuByUser(userobj,function(data) {
 		callback(response.obj(response.codeEnum.OK,data));
 	});
 };
-module.exports.getFunctionByUser = session_getFunctionByUser;
+module.exports.getMenuByUser = session_getMenuByUser;
 
-var session_setFunctionCrud = function (userobj,funobj,callback) {
-	userService.setFunctionCrud(userobj,funobj,function (data) {
+var session_setMenuCrud = function (userobj,funobj,callback) {
+	userService.setMenuCrud(userobj,funobj,function (data) {
 		callback(data);
 	});
 };
-module.exports.setFunctionCrud = session_setFunctionCrud;
+module.exports.setMenuCrud = session_setMenuCrud;
 
 var session_setUserRole = function (userobj,roleIdAry,callback) {
 	roleService.getRoleById(roleIdAry,function (roleDate) {

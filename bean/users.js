@@ -14,7 +14,7 @@ var userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'roles'
     },
-    function_crud: Array,
+    menu_crud: Array,
     custom: Schema.Types.Mixed
 });
 

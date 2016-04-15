@@ -7,7 +7,7 @@ var roleSchema = new Schema({
 	_id:Schema.Types.ObjectId,
 	system_parameter:{ type: Number, min: 0, max: 999 },
 	name:String,
-	function:Array
+	menu:Array
 })
 
 var bean_role = mongoose.model('role', roleSchema);
