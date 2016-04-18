@@ -110,7 +110,7 @@ describe('UserService', function() {
                 function save(callback) {
 
                     user.save(company, function(err, data) {
-                        // output("user = " + data);
+                        output("user = " + data);
                     });
                     company.save(company, function(err, data) {
                         // output("company = " + data);
@@ -133,4 +133,41 @@ describe('UserService', function() {
 
         });
     });
+
+    describe('#getUserRefs(user, condition, function(data))', function() {
+        it('get user detail infomation', function(done) {
+
+            var testUser = newUser();
+            async.series({
+                save: function(callback) {
+                    testUser.save(function(err, user) {
+                        output("save user = " + user._id);
+                        callback();
+                    });
+                },
+                update: function(callback) {
+                    testUser.custom = { _company: '1234' };
+                    (testUser).should.be.a('object');
+                    // output(testUser.custom);
+                    testUser.should.have.deep.property('custom._company', '1234');
+                    UserService.customizeUser(testUser, function(data) {
+                        (data.values).should.be.a('object');
+                        (data.values.system_parameter).should.be.equal(testUser.system_parameter);
+                        (data.values.id_number).should.be.equal(testUser.id_number);
+                        (data.values.email).should.be.equal(testUser.email);
+                        (data.values.name).should.be.equal(testUser.name);
+                        (data.values.pwd).should.be.equal(testUser.pwd);
+                        // (data.values).should.have.property('custom','_company');
+                        (data.values).should.have.deep.property('custom._company', '1234');
+                        callback();
+                    })
+                }
+            }, function(err, results) {
+                // output("res", results);
+                done();
+            });
+
+        });
+    });
+
 });
