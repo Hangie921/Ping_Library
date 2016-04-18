@@ -111,6 +111,17 @@ var fun_customizeUser = function(userobj,callback){
 	}
 }
 
+var fun_getUserRefs = function(userobj,condition,callback){
+	User.findOne({
+		system_parameter:userobj.system_parameter,
+		email : userobj.email
+	}, function(err, user_data) {
+	  	user_data.getRefs(condition,function (argument) {
+			callback(response.obj(response.codeEnum.OK,user_data_callback));
+	  	});
+	});
+}
+
 //--EXPORT---
 exports.getUser = fun_getUser;
 exports.registered = fun_registered;
@@ -118,3 +129,4 @@ exports.emailCheck = fun_emailCheck;
 exports.setMenuCrud = fun_setMenuCrud;
 exports.setUserRole = fun_setUserRole;
 exports.customizeUser = fun_customizeUser;
+exports.getUserRefs = fun_getUserRefs;

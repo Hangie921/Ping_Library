@@ -1,4 +1,4 @@
-var gengod = require('./common/generate/god');
+// var gengod = require('./common/generate/god');//<---產生GOD 這行會影響unitest TODO
 var main = require('./interface/session.js');
 main.User = require('./bean/users');
 main.Role = require('./bean/roles');

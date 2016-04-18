@@ -1,6 +1,7 @@
 var async = require('async');
 var userService = require('./userService');
-var functionService = require('./functionService');
+// var functionService = require('./functionService');
+var menuService = require('./menuService');
 var roleService = require('./roleService');
 
 var usersobj = require('../bean/users');
@@ -22,8 +23,8 @@ var session_login = function(req, res, obj, callbackUser) {
                 },
                 func: function(callback) {
                     //取得user的menu(這個method取了第二次的USER TODO)
-                    functionService.getFunctionByUser(obj, function(func_data) {
-                        req.session.func = func_data;
+                    menuService.getMenuByUser(obj, function(menu_data) {
+                        req.session.menu = menu_data;
 
                     	callback();
                     });
@@ -34,7 +35,7 @@ var session_login = function(req, res, obj, callbackUser) {
             });
         } else {
             req.session.user = null;
-            req.session.func = null;
+            req.session.menu = null;
             callbackUser(data);
         }
 
@@ -53,13 +54,13 @@ var session_getUserSession = function(req, res, callback) {
     }
 }
 
-var session_getFunctionSession = function(req, res, callback) {
+var session_getMenuSession = function(req, res, callback) {
     try {
-    	// console.log("session_getFunctionSession>>>>>"+req.session.func);
-        if (req.session.func === null) {
+    	// console.log("session_getMenuSession>>>>>"+req.session.menu);
+        if (req.session.menu === null) {
             callback(response.obj(response.codeEnum.Not_Found, null));
         } else {
-            callback(response.obj(response.codeEnum.OK, req.session.func));
+            callback(response.obj(response.codeEnum.OK, req.session.menu));
         }
     } catch (e) {
         callback(response.obj(response.codeEnum.Not_Found, null));
@@ -70,6 +71,7 @@ var session_getFunctionSession = function(req, res, callback) {
 var session_cleanUserSession = function(req, res, callback) {
     try {
         req.session.user = null;
+        req.session.menu = null;
         req.session.func = null;
         callback(response.obj(response.codeEnum.OK, req.session.user));
     } catch (e) {
@@ -80,5 +82,5 @@ var session_cleanUserSession = function(req, res, callback) {
 
 exports.login = session_login;
 exports.getUserSession = session_getUserSession;
-exports.getFunctionSession = session_getFunctionSession;
+exports.getMenuSession = session_getMenuSession;
 exports.cleanUserSession = session_cleanUserSession;
