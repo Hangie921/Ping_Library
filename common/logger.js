@@ -5,8 +5,7 @@ var logger = new winston.Logger({
     transports: [
         new winston.transports.File({
             level: 'info',
-            filename: 'd://logs//all-logs.log',//windows
-            // filename: '/usr/all-logs.log',//linux
+            filename: global.config.logFile,
             handleExceptions: true,
             json: true,
             maxsize: 5242880, //5MB

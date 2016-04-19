@@ -16,7 +16,7 @@ var sessionManager = require('../interface/session');
 // var config = serviceConfig.config();
 // logger.debug("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
 // logger.debug("test env..."+config.port);
-// var app = express();
+var app = express();
 
 //-------mongodb setup  start ---------------
 // var mongoose = require("mongoose");

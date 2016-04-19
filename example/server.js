@@ -1,6 +1,8 @@
 var express = require('express');
+var config = require('./config/config').config();
 var logger = require('../common/logger');
 var gengod = require('../common/generate/god');
+var mongoose = require("mongoose");
 
 // var env = require('./config/config.json');
 // exports.config = function() {
@@ -22,13 +24,14 @@ app.use(bodyParser());
 app.use(cookieParser());
 
 
-
-var mongoose = require("mongoose");
-if (process.argv[2] == '--local') {
-    var url = 'mongodb://localhost/test';
-} else {
-    var url = 'mongodb://192.168.60.65/test';
-}
+//將連線資訊寫入config.json
+//command line input : set NODE_ENV = 'development'
+// var mongoose = require("mongoose");
+// if (process.argv[2] == '--local') {
+//     var url = 'mongodb://localhost/test';
+// } else {
+//     var url = 'mongodb://192.168.60.65/test';
+// }
 
 //lib local 還沒測試  先不解開
 // app.use(require('express-session')({
@@ -38,8 +41,8 @@ if (process.argv[2] == '--local') {
 //     cookie: { maxAge: 1000*60*30 },
 // }));
 
-console.log("connect to " + url);
-mongoose.connect(url);
+console.log("connect to " + global.config.db);
+mongoose.connect(global.config.db);
 
 // 0 = disconnected
 // 1 = connected
