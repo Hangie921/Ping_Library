@@ -3,7 +3,6 @@ var usersobj = require('../bean/users');
 var functionobj = require('../bean/function');
 var roleobj = require('../bean/roles');
 var session = require('express-session');
-var logger = require('../common/logger');
 
 var funService = require('../service/functionService');
 var roleService = require('../service/roleService');

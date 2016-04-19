@@ -10,6 +10,5 @@ main.RoleService = require('./service/roleService');
 // main.FunctioService = require('./service/functionService');
 main.MenuService = require('./service/menuService');
 main.SessionService = require('./service/sessionService');
-main.logger = require('./common/logger');
 main.response = require('./common/response');
 module.exports = main;
