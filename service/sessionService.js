@@ -72,7 +72,6 @@ var session_cleanUserSession = function(req, res, callback) {
     try {
         req.session.user = null;
         req.session.menu = null;
-        req.session.func = null;
         callback(response.obj(response.codeEnum.OK, req.session.user));
     } catch (e) {
         callback(response.obj(response.codeEnum.Not_Found, null));

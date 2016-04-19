@@ -1,5 +1,13 @@
 var express = require('express');
+var logger = require('../common/logger');
 var gengod = require('../common/generate/god');
+
+// var env = require('./config/config.json');
+// exports.config = function() {
+//   logger.debug("process.env.NODE_ENV="+process.env.NODE_ENV);
+//   var node_env = process.env.NODE_ENV || 'development';
+//   return env[node_env];
+// };
 
 var bodyParser=require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -50,7 +58,7 @@ db.once('disconnected', function() {
 var server = app.listen(3000, function() {
     // var host = server.address().address
     // var port = server.address().port
-    // console.log('Example app listening at http://%s:%s ', host, port);
+    console.log('Example app listening at http://%s:%s ', host, port);
     // console.log('IP:'+process.env.IP);
     // console.log('PORT:'+process.env.PORT);
     // console.log('DBNAME:'+process.env.DBNAME);

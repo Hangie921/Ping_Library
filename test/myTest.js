@@ -3,15 +3,20 @@ var usersobj = require('../bean/users');
 var functionobj = require('../bean/function');
 var roleobj = require('../bean/roles');
 var session = require('express-session');
+var logger = require('../common/logger');
 
 var funService = require('../service/functionService');
 var roleService = require('../service/roleService');
+var userService = require('../service/userService');
 
 
 var sessionManager = require('../interface/session');
 
- 
-var app = express();
+// var serviceConfig = require('../example/server')
+// var config = serviceConfig.config();
+// logger.debug("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+// logger.debug("test env..."+config.port);
+// var app = express();
 
 //-------mongodb setup  start ---------------
 // var mongoose = require("mongoose");
@@ -290,6 +295,12 @@ sessionManager.getMenuByUser(userReg, function (data) {
 // var response = require('../common/response');
 // console.log(response.obj(response.codeEnum.OK,'hahahah'));
 
+//logger test
+// logger.info("logger info...");
+// logger.debug("logger debug...");
 
 
-
+// userService.registered(usrSearch,function (argument) {
+//   // body...
+//   logger.debug("argument.values="+argument.values);
+// });
