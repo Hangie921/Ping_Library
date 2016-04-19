@@ -31,12 +31,6 @@ var app = express();
 // var Schema = mongoose.Schema;
 
 
-// app.get('/employees/:id/reports', wines.findByManager);
-// app.get('/employees/:id', wines.findById);
-// app.get('/employees', wines.findAll);
-// app.post('/employees2/:id/reports', wines2.findByManager);
-
-
 
 //http://localhost:3000/employees2?name=j
 //http://localhost:3000/employees
@@ -260,18 +254,18 @@ var funObj = new functionobj({
 
 
 //取得UserFunction
-sessionManager.getMenuByUser(userReg, function (data) {
-  console.log(data.values);
+// sessionManager.getMenuByUser(userReg, function (data) {
+//   console.log(data.values);
 
-  //   // //--根目錄
-    for(var key in data.values){
-      if(data.values[key].parent_id == null){
-        // console.log(data[key].function.toString());
-        console.log(data.values[key].toString());
-        console.log("-----------------------------------------");
-      }
-    }
-});
+//   //   // //--根目錄
+//     for(var key in data.values){
+//       if(data.values[key].parent_id == null){
+//         // console.log(data[key].function.toString());
+//         console.log(data.values[key].toString());
+//         console.log("-----------------------------------------");
+//       }
+//     }
+// });
 
   //--第二層印製
   // sessionManager.getMenu(funObj,function (data) {

@@ -1,10 +1,8 @@
+var config = require('../../example/config/config').config();
 var async = require('async');
 var should = require('chai').should();
 var mongoose = require('mongoose');
-var mongodb = null;
-
-mongodb = 'mongodb://localhost/test';
-// mongodb = 'mongodb://192.168.60.65/unitest';
+var mongodb = config.unitestdb;
 
 var pinglib = require('../../index.js');
 var User = pinglib.User;
