@@ -8,7 +8,7 @@ var menuSchema = new Schema({
 	name:String,
 	parent_id:String,
 	menu:Array,
-    menu_crud:Array
+    // menu_crud:Array
 })
 
 var bean_menu = mongoose.model('menu', menuSchema,'menu');

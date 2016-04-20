@@ -4,6 +4,12 @@ var response = require('../common/response');
 var mongoose = require('mongoose');
 
 //--PUBLIC FUNCTION---
+var fun_setRole = function (roleobj,callback) {
+    roleobj.save(function (err,role) {
+        callback(response.obj(response.codeEnum.OK,role.id));
+    });
+}
+
 var fun_getRoleById = function(role_id,callback){
 	// console.log("fun_getRoleById="+role_id);
 	///這段搭配 myTest.js role_id_ary多筆  會有問題  再試試看
@@ -80,6 +86,7 @@ function getUnique(outputArray,inputArray) {
 
 
 //--EXPORT---
+exports.setRole = fun_setRole
 exports.getRoleById = fun_getRoleById
 exports.getRoleBySys = fun_getRoleBySys;
 exports.getRoleFunByUser = fun_getRoleFunByUser;
