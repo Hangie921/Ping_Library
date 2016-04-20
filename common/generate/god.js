@@ -16,7 +16,7 @@ var roleData = [{
     "system_parameter": 0,
     "name": "GOD",
     "is_god": true,
-    "function": [
+    "menu": [
         "rootno01",
         "rootno02",
         "settingno01", "settingno0101", "settingno0102", "settingno0103",
@@ -68,7 +68,7 @@ var god = [{
         { menu_id: "memberno02", "create": true, "read": true, "update": true, "delete": true, "disable": false },
         { menu_id: "memberno0301", "create": true, "read": true, "update": true, "delete": true, "disable": false },
         { menu_id: "rootno01", "create": true, "read": true, "update": true, "delete": true, "disable": false },
-        // {menu_id:"rootno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+        {menu_id:"rootno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
     ]
 }];
 

@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 //--PUBLIC FUNCTION---
 var fun_setRole = function (roleobj,callback) {
     roleobj.save(function (err,role) {
-        callback(response.obj(response.codeEnum.OK,role.id));
+        callback(response.obj(response.codeEnum.OK,role._id));
     });
 }
 

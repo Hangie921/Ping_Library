@@ -10,7 +10,7 @@ var hashMenu = null;
 //--PUBLIC FUNCTION---
 var fun_setMenu = function(menuobj, callback) {
     menuobj.save(function (err,menu) {
-        callback(response.obj(response.codeEnum.OK,menu.id));
+        callback(response.obj(response.codeEnum.OK,menu._id));
     });
 }
 var fun_getMenu = function(obj, callback) {
@@ -64,6 +64,7 @@ var fun_getMenuByUser = function(obj, callback) {
 
 }
 
+//--Private METHOD
 //驗證所有"MENU功能"權限
 function verifyMenuByUser(user_data, role_by_user_data, all_fun_data) {
     if (all_fun_data.length > 0) {
@@ -108,14 +109,7 @@ function findHashMenu_id(_id, obj) {
     return rtnAry.length > 0 ? rtnAry : null;
 }
 
-//驗證使用者連結可用性
-//TODO
-var fun_verifyAvailabilityForUserUrl = function(callback) {
-
-}
-
 //--EXPORT---
 exports.setMenu = fun_setMenu;
 exports.getMenu = fun_getMenu;
 exports.getMenuByUser = fun_getMenuByUser;
-exports.verifyAvailabilityForUserUrl = fun_verifyAvailabilityForUserUrl;
