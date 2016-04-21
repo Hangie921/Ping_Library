@@ -10,7 +10,8 @@ var hashMenu = null;
 //--PUBLIC FUNCTION---
 var fun_setMenu = function(menuobj, callback) {
     menuobj.save(function (err,menu) {
-        callback(response.obj(response.codeEnum.OK,menu._id));
+        if (err) throw err;
+        callback(response.obj(response.codeEnum.OK,menu));
     });
 }
 var fun_getMenu = function(obj, callback) {

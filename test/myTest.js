@@ -10,7 +10,7 @@ var userService = require('../service/userService');
 
 
 var sessionManager = require('../interface/session');
-
+var gengod = require('../common/generate/god');
 // var serviceConfig = require('../example/server')
 // var config = serviceConfig.config();
 // logger.debug("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
@@ -194,6 +194,12 @@ var funObj = new functionobj({
     system_parameter: 0,
     // parent_id : null
 });
+
+var userNo1 = new usersobj({
+  system_parameter: 0,
+  email: 'mbs001@ping.com.sg',
+  pwd:'AAA'
+});
 // roleService.getRoleBySys(0, function (data) {
 //   console.log("roleBySys="+data.values);
 // });
@@ -202,12 +208,12 @@ var funObj = new functionobj({
 //   console.log("getRoleFunByUser="+data.values);
 // });
 
-// sessionManager.registered(userReg,function (data) {
+// sessionManager.registered(userNo1,function (data) {
 //  console.log("registered====>"+data.values);
 // });
 
 //將USER 輸入function_crud
-// sessionManager.getUser(userReg, function (usrObj) {
+// sessionManager.getUser(userNo1, function (usrObj) {
 //   console.log("getUser... "+usrObj.values);
 //   sessionManager.setMenuCrud(usrObj,function_crud,function (data) {
 //     console.log("setFunction... "+data.values);
@@ -216,9 +222,9 @@ var funObj = new functionobj({
 // });
 
 // var role_id_ary = ['570746898af057fc456b2fc7','570746898af057fc456b2fc8'];
-// var role_id_ary = ['5710b68b07c6c10065a7e464'];
-// //將USER 輸入Role
-// sessionManager.getUser(userReg, function (usrObj) {
+var role_id_ary = ['57171b62960055008a88c56e'];
+// // //將USER 輸入Role
+// sessionManager.getUser(userNo1, function (usrObj) {
 //   // console.log("getUser... "+usrObj.values);
 //   sessionManager.setUserRole(usrObj,role_id_ary,function (data) {
 //     // console.log("setUserRole... "+data.values);

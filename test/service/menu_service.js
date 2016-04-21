@@ -19,7 +19,7 @@ function output(msg) {
         console.log(msg);
 }
 
-describe('UserService', function() {
+describe('MenuService', function() {
     function newMenuRoot() {
         var menu = new Menu();
         menu._id = "floor_1";
@@ -64,8 +64,8 @@ describe('UserService', function() {
         var role = new Role();
         role.system_parameter = 0;
         role.name = "GOD";
-        // role.is_god=true;
-        // role.menu=["floor_1_1","floor_1_2","floor_1"];
+        role.is_god=true;
+        role.menu=["floor_1_1","floor_1_2","floor_1"];
         return role;
     }
 
@@ -105,7 +105,7 @@ describe('UserService', function() {
             async.series({
                 save: function(callback) {
                     MenuService.setMenu(menu1, function(data) {
-                        (data.values).should.be.equal('floor_1');
+                        (data.values._id).should.be.equal('floor_1');
                         callback();
                     });
                 }
@@ -172,14 +172,7 @@ describe('UserService', function() {
                     MenuService.setMenu(menu1, function(data) {
                         MenuService.setMenu(menu1_1, function(data2) {
                             MenuService.setMenu(menu1_2, function(data3) {
-                                // RoleService.setRole(roledata,function (role_data) {
-                                //     console.log(role_data.values);
-                                //     // UserService.registered(newUser,function(argument) {
-                                //         callback();
-                                //     // });
-                                // });
-
-                                //TODO 上面的setRole有問題  暫時先用此方法insert
+                                //
                                 Role.collection.insertMany(roleData, function(err, r) {
 
                                     newUser.role = r.insertedIds[0];

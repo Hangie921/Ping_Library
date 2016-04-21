@@ -59,7 +59,7 @@ var god = [{
     "email": GOD_EMAIL,
     "name": GOD_NAME,
     "pwd": GOD_PWD,
-    "meun_crud": [
+    "menu_crud": [
         { menu_id: "settingno0101", "create": true, "read": true, "update": true, "delete": true, "disable": false },
         { menu_id: "settingno0102", "create": true, "read": true, "update": true, "delete": true, "disable": false },
         { menu_id: "settingno0103", "create": true, "read": true, "update": true, "delete": true, "disable": false },

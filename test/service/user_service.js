@@ -3,17 +3,22 @@ var should = require('chai').should();
 var mongoose = require('mongoose');
 var mongodb = null;
 
-mongodb = 'mongodb://localhost/test';
-// mongodb = 'mongodb://192.168.60.65/unitest';
+// mongodb = 'mongodb://localhost/test';
+mongodb = 'mongodb://192.168.60.65/unitest';
 
 var pinglib = require('../../index.js');
 var User = pinglib.User;
+var Role = pinglib.Role;
 var UserService = pinglib.UserService;
+var RoleService = pinglib.RoleService;
 
 function output(msg) {
     if (true)
         console.log(msg);
 }
+
+
+
 
 describe('UserService', function() {
     function newUser() {
@@ -24,6 +29,15 @@ describe('UserService', function() {
         user.name = '上帝';
         user.pwd = '!QAZ@WSX';
         return user;
+    }
+
+    function newRole() {
+        var role = new Role();
+        role.system_parameter = 0;
+        role.name = "GOD";
+        role.is_god = true;
+        role.menu = ["floor_1_1", "floor_1_2", "floor_1"];
+        return role;
     }
 
     beforeEach(function(done) {
@@ -51,6 +65,72 @@ describe('UserService', function() {
         // afterEach(function(done) {
         mongoose.disconnect();
         // return done();
+    });
+
+    describe('#user process..', function() {
+        it('', function(done) {
+            var testUser = newUser();
+            var saveUser = null;
+            async.series({
+                registered: function(callback) {
+                    UserService.registered(testUser, function(data) {
+                        saveUser = data;
+                        (data.code).should.be.equal(200);
+                        (data.values).should.be.a('object');
+                        callback();
+                    })
+                },
+                update: function(callback) {
+                    testChange = 'my god';
+                    saveUser.values.id_number = testChange;
+                    UserService.setUserById(saveUser.values, function(data) {
+                        (data.code).should.be.equal(200);
+                        (data.values).should.be.a('object');
+                        (data.values.id_number).should.be.equal(testChange);
+                        callback();
+                    });
+                },
+                email_check: function(callback) {
+                    UserService.emailCheck(testUser, function(data) {
+                        (data.code).should.be.equal(200);
+                        (data.values).should.be.equal(true);
+                        callback();
+                    });
+                },
+                setMenuCrud: function(callback) {
+                    UserService.getUser(testUser, function(userObj) {
+                        var menu_crud_array = [
+                            { menu_id: "rootno01", "create": true, "read": true, "update": true, "delete": true, "disable": false },
+                            { menu_id: "rootno02", "create": true, "read": true, "update": true, "delete": true, "disable": false },
+                        ];
+                        UserService.setMenuCrud(userObj, menu_crud_array, function(data) {
+                            (data.values).should.have.property('menu_crud').with.lengthOf(menu_crud_array.length);
+                            callback();
+                        });
+                    });
+                },
+                setUserRole: function(callback) {
+                    //此測試項目 預設假資料
+                    RoleService.setRole(newRole(), function(cbRole) {
+                        //由前端畫面傳回roleid 並確認資料正確性
+                        RoleService.getRoleById(cbRole.values, function(roleDate) {
+                            //由UserService 取得user info
+                            UserService.getUser(testUser, function(userObj) {
+                                //由UserService取得User物件 以及搭配 前端畫面傳回json 或 組合後的array roleid 查詢
+                                UserService.setUserRole(userObj, roleDate, function(userObj) {
+                                     (userObj.values.role+"").should.be.equal(cbRole.values+"");
+                                    callback();
+                                });
+                            });
+                        });
+
+                    });
+                }
+            }, function(err, results) {
+                done();
+            });
+
+        });
     });
 
     describe('#customizeUser(user, function(data))', function() {
