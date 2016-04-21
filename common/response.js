@@ -13,3 +13,6 @@ module.exports.codeEnum ={
 module.exports.obj = function (status_code,rtn_values) {
   return {code: status_code,values:rtn_values};
 };
+module.exports.obj = function (status_code,rtn_values,errMsg) {
+  return {code: status_code,values:rtn_values,errMsg:errMsg};
+};

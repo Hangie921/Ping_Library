@@ -25,7 +25,7 @@ var fun_getUser = function(obj, callback) {
                 callback(response.obj(response.codeEnum.Password_Error, rtn_obj));
             }
         } else {
-            callback(response.obj(response.codeEnum.Bad_Request, 'not found'));
+            callback(response.obj(response.codeEnum.Bad_Request, null,'not found'));
         }
     });
 }
@@ -44,7 +44,7 @@ var fun_registered = function(obj, callback) {
                 callback(response.obj(response.codeEnum.OK, obj));
             });
         } else {
-            callback(response.obj(response.codeEnum.Already_Exists, "Already Exists"));
+            callback(response.obj(response.codeEnum.Already_Exists,null, "Already Exists"));
         }
     });
 }
@@ -59,7 +59,7 @@ var fun_emailCheck = function(obj, callback) {
         if (null != data) {
             callback(response.obj(response.codeEnum.OK, true));
         } else {
-            callback(response.obj(response.codeEnum.Not_Found, false));
+            callback(response.obj(response.codeEnum.Not_Found,null, false));
         }
     });
 }
@@ -77,7 +77,7 @@ var fun_setMenuCrud = function(userobj, menuAry, callback) {
                 callback(response.obj(response.codeEnum.OK, data));
             });
         } else {
-            callback(response.obj(response.codeEnum.No_Results, false));
+            callback(response.obj(response.codeEnum.No_Results,null, false));
         }
     });
 }
@@ -95,7 +95,7 @@ var fun_setUserRole = function(userobj, roleIdAry, callback) {
                 callback(response.obj(response.codeEnum.OK, data));
             });
         } else {
-            callback(response.obj(response.codeEnum.No_Results, false));
+            callback(response.obj(response.codeEnum.No_Results,null, false));
         }
     });
 }
@@ -107,7 +107,7 @@ var fun_customizeUser = function(userobj, callback) {
             if (null != data) {
                 callback(response.obj(response.codeEnum.OK, data));
             } else {
-                callback(response.obj(response.codeEnum.Not_Found, null));
+                callback(response.obj(response.codeEnum.Not_Found,null, null));
             }
         });
     }

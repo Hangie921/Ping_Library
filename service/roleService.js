@@ -23,7 +23,7 @@ var fun_getRoleById = function(role_id,callback){
 	  	if(null!=data){
 	  		callback(response.obj(response.codeEnum.OK,data));
 	  	}else{
-	  		callback(response.obj(response.codeEnum.No_Results,null));
+	  		callback(response.obj(response.codeEnum.No_Results,null,'no results'));
 	  	}
 	});
 }
@@ -37,7 +37,7 @@ var fun_getRoleBySys = function(sys_parameter,callback){
 	  	if(null!=data){
 	  		callback(response.obj(response.codeEnum.OK,data));
 	  	}else{
-	  		callback(response.obj(response.codeEnum.No_Results,null));
+	  		callback(response.obj(response.codeEnum.No_Results,null,'no results'));
 	  	}
 	});
 }
@@ -67,7 +67,7 @@ var fun_getRoleFunByUser = function(obj,callback){
 				}
 				callback(response.obj(response.codeEnum.OK,outputArray));
 			}else{
-				callback(response.obj(response.codeEnum.No_Results,null));
+				callback(response.obj(response.codeEnum.No_Results,null,'no results'));
 			}
 		});
 	}
