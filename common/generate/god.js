@@ -102,7 +102,7 @@ var godSearch = new User({
 
 userService.getUser(godSearch, function(data) {
 
-    if (response.codeEnum.OK != data.code) {
+    if (response.OK.code != data.code) {
         Role.collection.insertMany(roleData, function(err, r) {
             Menu.collection.insertMany(funDataRoot, function(errf1, f1_data) {
                 // body...
@@ -116,7 +116,7 @@ userService.getUser(godSearch, function(data) {
 
             User.collection.insertMany(god, function(m_err, user_data) {
 
-
+                console.log(user_data);
                 user_data.insertedIds.forEach(function(argument) {
                     // console.log("role==step1=>"+argument);
 

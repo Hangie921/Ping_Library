@@ -5,9 +5,11 @@ var response = require('../common/response');
 
 //--PUBLIC FUNCTION---
 var fun_setUserById = function(userobj, callback) {
-    User.findByIdAndUpdate(userobj._id,userobj,{new: true},function (err,data) {
-    	if (err) throw err;
-    	callback(response.obj(response.codeEnum.OK, data));
+    User.findByIdAndUpdate(userobj._id, userobj, { new: true }, function(err, data) {
+        if (err) throw err;
+        rtn = response.OK;
+        rtn.values = data;
+        callback(rtn);
     });
 }
 
@@ -18,15 +20,19 @@ var fun_getUser = function(obj, callback) {
         // pwd: obj.pwd
     }, function(err, rtn_obj) {
         if (err) throw err;
+        var rtn = null;
         if (null != obj && null != rtn_obj[0] && null != rtn_obj[0].pwd) {
             if (rtn_obj[0].pwd == obj.pwd) {
-                callback(response.obj(response.codeEnum.OK, rtn_obj));
+                rtn = response.OK;
+                rtn.values = rtn_obj;
             } else {
-                callback(response.obj(response.codeEnum.Password_Error, rtn_obj));
+                rtn = response.Password_Error;
+                rtn.values = rtn_obj;
             }
         } else {
-            callback(response.obj(response.codeEnum.Bad_Request, null,'not found'));
+            rtn = response.Bad_Request;
         }
+        callback(rtn);
     });
 }
 
@@ -37,14 +43,18 @@ var fun_registered = function(obj, callback) {
         email: obj.email
     }, function(err, data) {
         if (err) throw err;
+        var rtn = null;
 
         if (null == data) {
             obj.save(function(err) {
                 if (err) throw err;
-                callback(response.obj(response.codeEnum.OK, obj));
+                rtn = response.OK;
+                rtn.values = obj;
+                callback(rtn);
             });
         } else {
-            callback(response.obj(response.codeEnum.Already_Exists,null, "Already Exists"));
+            rtn = response.Already_Exists;
+            callback(rtn);
         }
     });
 }
@@ -56,11 +66,15 @@ var fun_emailCheck = function(obj, callback) {
         email: obj.email
     }, function(err, data) {
         if (err) throw err;
+        var rtn = null;
         if (null != data) {
-            callback(response.obj(response.codeEnum.OK, true));
+            rtn = response.OK;
+            rtn.values = true;
         } else {
-            callback(response.obj(response.codeEnum.Not_Found,null, false));
+            rtn = response.Not_Found;
+            rtn.values = false;
         }
+        callback(rtn);
     });
 }
 
@@ -70,14 +84,19 @@ var fun_setMenuCrud = function(userobj, menuAry, callback) {
         _id: userobj.values[0]._id,
     }, function(err, data) {
         if (err) throw err;
+        var rtn = null;
         if (null != data) {
             data.menu_crud = menuAry;
             data.save(function(err) {
                 if (err) throw err;
-                callback(response.obj(response.codeEnum.OK, data));
+                rtn = response.OK;
+                rtn.values = data;
+                callback(rtn);
             });
         } else {
-            callback(response.obj(response.codeEnum.No_Results,null, false));
+            rtn = response.No_Results;
+            rtn.values = false;
+            callback(rtn);
         }
     });
 }
@@ -88,14 +107,19 @@ var fun_setUserRole = function(userobj, roleIdAry, callback) {
         _id: userobj.values[0]._id,
     }, function(err, data) {
         if (err) throw err;
+        var rtn = null;
         if (null != data) {
             data.role = roleIdAry.values;
             data.save(function(err) {
                 if (err) throw err;
-                callback(response.obj(response.codeEnum.OK, data));
+                rtn = response.OK;
+                rtn.values = data;
+                callback(rtn);
             });
         } else {
-            callback(response.obj(response.codeEnum.No_Results,null, false));
+            rtn = response.No_Results;
+            rtn.values = false;
+            callback(rtn);
         }
     });
 }
@@ -104,11 +128,14 @@ var fun_setUserRole = function(userobj, roleIdAry, callback) {
 var fun_customizeUser = function(userobj, callback) {
     if (null != userobj && null !== userobj.custom) {
         User.findByIdAndUpdate(userobj._id, userobj, { new: true }, function(err, data) {
+            var rtn = null;
             if (null != data) {
-                callback(response.obj(response.codeEnum.OK, data));
+                rtn = response.OK;
+                rtn.values = data;
             } else {
-                callback(response.obj(response.codeEnum.Not_Found,null, null));
+                rtn = response.Not_Found;
             }
+            callback(rtn);
         });
     }
 }
@@ -118,8 +145,12 @@ var fun_getUserRefs = function(userobj, condition, callback) {
         system_parameter: userobj.system_parameter,
         email: userobj.email
     }, function(err, user_data) {
-        user_data.getRefs(condition, function(argument) {
-            callback(response.obj(response.codeEnum.OK, user_data_callback));
+        user_data.getRefs(condition, function(data) {
+            var rtn = null;
+            rtn = response.OK;
+            rtn.values = data;
+
+            callback(rtn);
         });
     });
 }

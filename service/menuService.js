@@ -9,9 +9,11 @@ var roleService = require('./roleService');
 var hashMenu = null;
 //--PUBLIC FUNCTION---
 var fun_setMenu = function(menuobj, callback) {
-    menuobj.save(function (err,menu) {
+    menuobj.save(function(err, menu) {
         if (err) throw err;
-        callback(response.obj(response.codeEnum.OK,menu));
+        var rtn = response.OK;
+        rtn.values = menu;
+        callback(rtn);
     });
 }
 var fun_getMenu = function(obj, callback) {
@@ -20,7 +22,8 @@ var fun_getMenu = function(obj, callback) {
         // parent_id:obj.parent_id
     }, function(err, obj) {
         if (err) {
-            throw err; }
+            throw err;
+        }
         //暫存資料
         hashMenu = obj;
         //根節點儲存陣列
@@ -43,7 +46,7 @@ var fun_getMenuByUser = function(obj, callback) {
     userService.getUser(obj, function(user_data) {
         roleService.getRoleFunByUser(user_data, function(role_by_user_data) {
             //全部function
-            fun_getMenu(user_data.values[0], function(all_fun_data) {
+            fun_getMenu(obj, function(all_fun_data) {
                 //使用者傭有的功能 將會被存入user_menu_list
                 user_menu_list = [];
                 //驗證所有menu的權限

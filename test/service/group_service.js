@@ -63,6 +63,7 @@ describe('GroupService', function() {
         group.name = "MIS 部";
         return group;
     }
+
     function newGroup2_1() {
         var group = new Group();
         group._id = "mis1_1";
@@ -71,6 +72,7 @@ describe('GroupService', function() {
         group.name = "軟體工程組";
         return group;
     }
+
     function newGroup2_2() {
         var group = new Group();
         group._id = "mis1_2";
@@ -107,8 +109,8 @@ describe('GroupService', function() {
         // return done();
     });
 
-    describe('#setGroup(groupobj, function(data)) ', function() {
-        it('setGroup & getGroup ', function(done) {
+    describe('#group base process ', function() {
+        it('single case ', function(done) {
             var groupRtn = null;
             async.series({
                 save: function(callback) {
@@ -118,19 +120,56 @@ describe('GroupService', function() {
                         callback();
                     });
                 },
-                update:function (callback) {
-                    var changeVal = "abc";
+                update: function(callback) {
+                    var changeVal = "single test case";
                     groupRtn.values.name = changeVal;
-                    GroupService.setGroupById(groupRtn.values,function (data) {
+                    GroupService.setGroupById(groupRtn.values, function(data) {
                         (data.code).should.be.equal(200);
                         (data.values).should.be.a('object');
                         (data.values.name).should.be.equal(changeVal);
                         callback();
                     });
                 },
-                get:function (callback) {
-                    GroupService.getGroup(0,function (data) {
-                        (data.values[0]._id).should.be.equal(newGroup1()._id);
+                get: function(callback) {
+                    GroupService.getGroup(0, function(data) {
+                        (data[0]._id).should.be.equal(newGroup1()._id);
+                        callback();
+                    });
+                }
+            }, function(err, results) {
+                done();
+            });
+
+        });
+    });
+
+
+    describe('#group base process ', function() {
+        it('mulit case ', function(done) {
+            var groupRtn = null;
+            async.series({
+                save: function(callback) {
+                    GroupService.setGroup(newGroup1(), function(data1) {
+                        (data1.code).should.be.equal(200);
+                        groupRtn = data1;
+                        GroupService.setGroup(newGroup1_1(), function(data2) {
+                            GroupService.setGroup(newGroup1_2(), function(data3) {
+                                GroupService.setGroup(newGroup2(), function(data4) {
+                                    GroupService.setGroup(newGroup2_1(), function(data5) {
+                                        GroupService.setGroup(newGroup2_2(), function(data6) {
+                                            callback();
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    });
+                },
+                get: function(callback) {
+                    GroupService.getGroup(0, function(data) {
+                        console.log(data);
+                        (data).should.be.a('array');
+                        (data[0]).should.have.property('group').with.lengthOf(2);
                         callback();
                     });
                 }

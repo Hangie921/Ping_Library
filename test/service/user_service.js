@@ -13,8 +13,8 @@ var UserService = pinglib.UserService;
 var RoleService = pinglib.RoleService;
 
 function output(msg) {
-    if (true)
-        console.log(msg);
+    // if (true)
+    // console.log(msg);
 }
 
 
@@ -112,13 +112,16 @@ describe('UserService', function() {
                 setUserRole: function(callback) {
                     //此測試項目 預設假資料
                     RoleService.setRole(newRole(), function(cbRole) {
+                        var temp_cbRole = clone(cbRole);
                         //由前端畫面傳回roleid 並確認資料正確性
-                        RoleService.getRoleById(cbRole.values, function(roleDate) {
+                        RoleService.getRoleById(temp_cbRole.values, function(roleDate) {
+                            var temp_roleDate = new clone(roleDate);
                             //由UserService 取得user info
                             UserService.getUser(testUser, function(userObj) {
+                                var temp_userObj = new clone(userObj);
                                 //由UserService取得User物件 以及搭配 前端畫面傳回json 或 組合後的array roleid 查詢
-                                UserService.setUserRole(userObj, roleDate, function(userObj) {
-                                     (userObj.values.role+"").should.be.equal(cbRole.values+"");
+                                UserService.setUserRole(temp_userObj, temp_roleDate, function(rtnUserObj) {
+                                    (rtnUserObj.values.role + "").should.be.equal(temp_cbRole.values + "");
                                     callback();
                                 });
                             });
@@ -214,3 +217,57 @@ describe('UserService', function() {
         });
     });
 });
+
+
+
+function clone(src) {
+    function mixin(dest, source, copyFunc) {
+        var name, s, i, empty = {};
+        for (name in source) {
+            // the (!(name in empty) || empty[name] !== s) condition avoids copying properties in "source"
+            // inherited from Object.prototype.  For example, if dest has a custom toString() method,
+            // don't overwrite it with the toString() method that source inherited from Object.prototype
+            s = source[name];
+            if (!(name in dest) || (dest[name] !== s && (!(name in empty) || empty[name] !== s))) {
+                dest[name] = copyFunc ? copyFunc(s) : s;
+            }
+        }
+        return dest;
+    }
+
+    if (!src || typeof src != "object" || Object.prototype.toString.call(src) === "[object Function]") {
+        // null, undefined, any non-object, or function
+        return src; // anything
+    }
+    if (src.nodeType && "cloneNode" in src) {
+        // DOM Node
+        return src.cloneNode(true); // Node
+    }
+    if (src instanceof Date) {
+        // Date
+        return new Date(src.getTime()); // Date
+    }
+    if (src instanceof RegExp) {
+        // RegExp
+        return new RegExp(src); // RegExp
+    }
+    var r, i, l;
+    if (src instanceof Array) {
+        // array
+        r = [];
+        for (i = 0, l = src.length; i < l; ++i) {
+            if (i in src) {
+                r.push(clone(src[i]));
+            }
+        }
+        // we don't clone functions for performance reasons
+        //      }else if(d.isFunction(src)){
+        //          // function
+        //          r = function(){ return src.apply(this, arguments); };
+    } else {
+        // generic objects
+        r = src.constructor ? new src.constructor() : {};
+    }
+    return mixin(r, src, clone);
+
+}

@@ -10,6 +10,6 @@ var groupSchema = new Schema({
 	group:Array
 })
 
-var bean_group = mongoose.model('group', groupSchema,'group');
+var bean_group = mongoose.model('group', groupSchema);
 
 module.exports = bean_group;

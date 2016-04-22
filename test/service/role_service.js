@@ -74,7 +74,7 @@ describe('RoleService', function() {
                         RoleService.getRoleById(role_data.values, function(role_val) {
                             (role_val.values).should.be.a('object');
                             RoleService.getRoleBySys(roledata.system_parameter, function(sys_data) {
-                                (sys_data.values[0]._id+"").should.be.equal(role_val.values._id+"");
+                                (sys_data.values[0]._id+"").should.be.equal(role_val.values[0]._id+"");
                                 callback();
                             });
                         });

@@ -31,13 +31,17 @@ var session_registered = function(usersobj,callback){
 module.exports.registered = session_registered;
 
 var session_sessionExist = function(callback){
-	callback(response.obj(response.codeEnum.OK,session.usersobj!=null));
+        var rtn = response.OK;
+        rtn.values = session.usersobj!=null;
+        callback(rtn);
 }
 module.exports.sessionExist = session_sessionExist;
 
 var session_cleanSession = function(callback){
 	expressSession.usersobj = null;
-	callback(response.obj(response.codeEnum.OK,(expressSession.usersobj==null)));
+        var rtn = response.OK;
+        rtn.values = (expressSession.usersobj==null);
+        callback(rtn);
 }
 module.exports.cleanSession = session_cleanSession;
 
@@ -86,14 +90,18 @@ module.exports.getRoleFunByUser = session_getRoleFunByUser;
 
 var session_getMenu = function(funObj,callback){
 	menuService.getMenu(funObj,function(data) {
-		callback(response.obj(response.codeEnum.OK,data));
+        var rtn = response.OK;
+        rtn.values = data;
+        callback(rtn);
 	});
 };
 module.exports.getMenu = session_getMenu;
 
 var session_getMenuByUser = function(userobj,callback){
 	menuService.getMenuByUser(userobj,function(data) {
-		callback(response.obj(response.codeEnum.OK,data));
+        var rtn = response.OK;
+        rtn.values = data;
+        callback(rtn);
 	});
 };
 module.exports.getMenuByUser = session_getMenuByUser;

@@ -172,7 +172,6 @@ describe('MenuService', function() {
                     MenuService.setMenu(menu1, function(data) {
                         MenuService.setMenu(menu1_1, function(data2) {
                             MenuService.setMenu(menu1_2, function(data3) {
-                                //
                                 Role.collection.insertMany(roleData, function(err, r) {
 
                                     newUser.role = r.insertedIds[0];
