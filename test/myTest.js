@@ -318,59 +318,59 @@ var role_id_ary = ['57171b62960055008a88c56e'];
 
 //產生group 
 
-// function newGroup1() {
-//     var group = new Group();
-//     group._id = "hr1";
-//     group.system_parameter = 0;
-//     group.parent_id = null;
-//     group.name = "人力資源部";
-//     return group;
-// }
+function newGroup1() {
+    var group = new Group();
+    group._id = "hr1";
+    group.system_parameter = 0;
+    group.parent_id = null;
+    group.name = "人力資源部";
+    return group;
+}
 
-// function newGroup1_1() {
-//     var group = new Group();
-//     group._id = "hr1_1";
-//     group.system_parameter = 0;
-//     group.parent_id = 'hr1';
-//     group.name = "會計組";
-//     return group;
-// }
+function newGroup1_1() {
+    var group = new Group();
+    group._id = "hr1_1";
+    group.system_parameter = 0;
+    group.parent_id = 'hr1';
+    group.name = "會計組";
+    return group;
+}
 
-// function newGroup1_2() {
-//     var group = new Group();
-//     group._id = "hr1_2";
-//     group.system_parameter = 0;
-//     group.parent_id = 'hr1';
-//     group.name = "招募組";
-//     return group;
-// }
+function newGroup1_2() {
+    var group = new Group();
+    group._id = "hr1_2";
+    group.system_parameter = 0;
+    group.parent_id = 'hr1';
+    group.name = "招募組";
+    return group;
+}
 
-// function newGroup2() {
-//     var group = new Group();
-//     group._id = "mis1";
-//     group.system_parameter = 0;
-//     group.parent_id = null;
-//     group.name = "MIS 部";
-//     return group;
-// }
+function newGroup2() {
+    var group = new Group();
+    group._id = "mis1";
+    group.system_parameter = 0;
+    group.parent_id = null;
+    group.name = "MIS 部";
+    return group;
+}
 
-// function newGroup2_1() {
-//     var group = new Group();
-//     group._id = "mis1_1";
-//     group.system_parameter = 0;
-//     group.parent_id = 'mis1';
-//     group.name = "軟體工程組";
-//     return group;
-// }
+function newGroup2_1() {
+    var group = new Group();
+    group._id = "mis1_1";
+    group.system_parameter = 0;
+    group.parent_id = 'mis1';
+    group.name = "軟體工程組";
+    return group;
+}
 
-// function newGroup2_2() {
-//     var group = new Group();
-//     group._id = "mis1_2";
-//     group.system_parameter = 0;
-//     group.parent_id = 'mis1';
-//     group.name = "硬體工程組";
-//     return group;
-// }
+function newGroup2_2() {
+    var group = new Group();
+    group._id = "mis1_2";
+    group.system_parameter = 0;
+    group.parent_id = 'mis1';
+    group.name = "硬體工程組";
+    return group;
+}
 
 
 // groupService.setGroup(newGroup1(), function(data1) {

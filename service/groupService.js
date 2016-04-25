@@ -30,6 +30,20 @@ var fun_getGroup = function(system_parameter, callback) {
         callback(groupRootAry);
     });
 }
+var fun_getGroupList = function(system_parameter, callback) {
+    Group.find({
+        system_parameter: system_parameter
+    }, function(err, data) {
+        if (err) throw err;
+        //為jOrgChart套件而增加 將null變更為=>""
+        for (var key in data) {
+            if (data[key].parent_id == null) {
+                data[key].parent_id="";
+            }
+        }
+        callback(data);
+    });
+}
 
 var fun_setGroupById = function(groupobj, callback) {
     Group.findByIdAndUpdate(groupobj._id, groupobj, { new: true }, function(err, data) {
@@ -75,4 +89,5 @@ function findHashGroup_id(_id, obj) {
 
 exports.setGroup = fun_setGroup;
 exports.getGroup = fun_getGroup;
+exports.getGroupList = fun_getGroupList;
 exports.setGroupById = fun_setGroupById;

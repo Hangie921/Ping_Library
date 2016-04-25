@@ -30,7 +30,7 @@ var fun_getUser = function(obj, callback) {
                 rtn.values = rtn_obj;
             }
         } else {
-            rtn = response.Bad_Request;
+            rtn = response.No_Results;
         }
         callback(rtn);
     });
