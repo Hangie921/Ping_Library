@@ -7,6 +7,7 @@ var session = require('express-session');
 var funService = require('../service/functionService');
 var roleService = require('../service/roleService');
 var userService = require('../service/userService');
+var companyService = require('../service/companyService');
 
 
 var sessionManager = require('../interface/session');
@@ -15,6 +16,10 @@ var gengod = require('../common/generate/god');
 var pinglib = require('../index.js');
 var groupService = pinglib.GroupService;
 var Group = pinglib.Group;
+var Company = pinglib.Company;
+
+
+var clone = require('../common/clone');
 
 // var serviceConfig = require('../example/server')
 // var config = serviceConfig.config();
@@ -213,12 +218,12 @@ var userNo1 = new usersobj({
 //   console.log("getRoleFunByUser="+data.values);
 // });
 
-// sessionManager.registered(userNo1,function (data) {
+// sessionManager.registered(userReg,function (data) {
 //  console.log("registered====>"+data.values);
 // });
 
 //將USER 輸入function_crud
-// sessionManager.getUser(userNo1, function (usrObj) {
+// sessionManager.getUser(userReg, function (usrObj) {
 //   console.log("getUser... "+usrObj.values);
 //   sessionManager.setMenuCrud(usrObj,function_crud,function (data) {
 //     console.log("setFunction... "+data.values);
@@ -227,11 +232,12 @@ var userNo1 = new usersobj({
 // });
 
 // var role_id_ary = ['570746898af057fc456b2fc7','570746898af057fc456b2fc8'];
-var role_id_ary = ['57171b62960055008a88c56e'];
+var role_id_ary = ['5719fcc5d98ed82035021741'];
 // // //將USER 輸入Role
-// sessionManager.getUser(userNo1, function (usrObj) {
+// sessionManager.getUser(userReg, function (usrObj) {
 //   // console.log("getUser... "+usrObj.values);
-//   sessionManager.setUserRole(usrObj,role_id_ary,function (data) {
+//   var temp_userObj = clone(usrObj);
+//   sessionManager.setUserRole(temp_userObj,role_id_ary,function (data) {
 //     // console.log("setUserRole... "+data.values);
 
 //   });
@@ -387,3 +393,34 @@ function newGroup2_2() {
 //         });
 //     });
 // });
+
+
+    function newCompany1() {
+        var company = new Company();
+        company._id="ping_team";
+        company.system_parameter = 0;
+        company.id_number = "55667788"
+        company.name = 'Ping製作團隊';
+        company.address = '新北市鬧區';
+        company.url = 'http://ping.com.tw';
+        return company;
+    }
+    function newCompany2() {
+        var company = new Company();
+        company._id="ping_hr";
+        company.system_parameter = 0;
+        company.id_number = "1111111111"
+        company.name = 'HR system';
+        company.address = '新北市鬧區';
+        company.url = 'http://hr.com.tw';
+        return company;
+    }
+
+    companyService.setCompany(newCompany1(),function (argument) {
+      console.log("company1 _id=>"+argument.values);
+      callback();
+    });
+    companyService.setCompany(newCompany2(),function (argument) {
+      console.log("company2 _id=>"+argument.values);
+      callback();
+    });

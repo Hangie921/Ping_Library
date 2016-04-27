@@ -116,6 +116,8 @@ module.exports.setMenuCrud = session_setMenuCrud;
 var session_setUserRole = function (userobj,roleIdAry,callback) {
 	roleService.getRoleById(roleIdAry,function (roleDate) {
 		console.log("roleDate="+roleDate.values);
+		console.log("roleDate_id="+roleDate.values._id);
+		console.log("userobj="+userobj.values[0]);
 		userService.setUserRole(userobj,roleDate,function (data) {
 			callback(data);
 		});

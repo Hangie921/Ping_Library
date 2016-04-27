@@ -24,7 +24,6 @@ var fun_getRoleById = function(role_id, callback) {
         if (null != data) {
             resault = response.OK;
             resault.values = data;
-            console.log("in 1")
             return callback(resault);
         } else {
             resault = response.No_Results;

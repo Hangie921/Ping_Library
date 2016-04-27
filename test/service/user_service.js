@@ -28,6 +28,8 @@ describe('UserService', function() {
         user.email = 'god@ping.com.sg';
         user.name = '上帝';
         user.pwd = '!QAZ@WSX';
+        user.company_id = "ping_team";
+        user.group_id = "";
         return user;
     }
 
