@@ -1,5 +1,5 @@
 var mongoose = require("mongoose");
-mongoose.connect('mongodb://192.168.60.65/test')
+mongoose.connect(global.config.db);
 
 
 // 0 = disconnected

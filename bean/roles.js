@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 // create a schema
 var roleSchema = new Schema({
-	_id:Schema.Types.ObjectId,
+	// _id:Schema.Types.ObjectId,
 	system_parameter:{ type: Number, min: 0, max: 999 },
 	name:String,
 	menu:Array

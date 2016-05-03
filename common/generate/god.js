@@ -16,7 +16,7 @@ var roleData = [{
     "system_parameter": 0,
     "name": "GOD",
     "is_god": true,
-    "function": [
+    "menu": [
         "rootno01",
         "rootno02",
         "settingno01", "settingno0101", "settingno0102", "settingno0103",
@@ -59,7 +59,7 @@ var god = [{
     "email": GOD_EMAIL,
     "name": GOD_NAME,
     "pwd": GOD_PWD,
-    "meun_crud": [
+    "menu_crud": [
         { menu_id: "settingno0101", "create": true, "read": true, "update": true, "delete": true, "disable": false },
         { menu_id: "settingno0102", "create": true, "read": true, "update": true, "delete": true, "disable": false },
         { menu_id: "settingno0103", "create": true, "read": true, "update": true, "delete": true, "disable": false },
@@ -68,7 +68,7 @@ var god = [{
         { menu_id: "memberno02", "create": true, "read": true, "update": true, "delete": true, "disable": false },
         { menu_id: "memberno0301", "create": true, "read": true, "update": true, "delete": true, "disable": false },
         { menu_id: "rootno01", "create": true, "read": true, "update": true, "delete": true, "disable": false },
-        // {menu_id:"rootno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+        {menu_id:"rootno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
     ]
 }];
 
@@ -102,7 +102,7 @@ var godSearch = new User({
 
 userService.getUser(godSearch, function(data) {
 
-    if (response.codeEnum.OK != data.code) {
+    if (response.OK.code != data.code) {
         Role.collection.insertMany(roleData, function(err, r) {
             Menu.collection.insertMany(funDataRoot, function(errf1, f1_data) {
                 // body...
@@ -116,7 +116,7 @@ userService.getUser(godSearch, function(data) {
 
             User.collection.insertMany(god, function(m_err, user_data) {
 
-
+                console.log(user_data);
                 user_data.insertedIds.forEach(function(argument) {
                     // console.log("role==step1=>"+argument);
 

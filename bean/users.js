@@ -15,6 +15,8 @@ var userSchema = new Schema({
         ref: 'roles'
     },
     menu_crud: Array,
+    company_id:String,
+    group_id:String,
     custom: Schema.Types.Mixed
 });
 

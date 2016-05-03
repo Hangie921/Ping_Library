@@ -1,5 +1,15 @@
 var express = require('express');
+// var config = require('./config/config').config();
+
 var gengod = require('../common/generate/god');
+var mongoose = require("mongoose");
+
+// var env = require('./config/config.json');
+// exports.config = function() {
+//   logger.debug("process.env.NODE_ENV="+process.env.NODE_ENV);
+//   var node_env = process.env.NODE_ENV || 'development';
+//   return env[node_env];
+// };
 
 var bodyParser=require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -12,7 +22,6 @@ var mytest = require('../test/mytest');
 
 app.use(bodyParser());
 app.use(cookieParser());
-
 
 
 var mongoose = require("mongoose");

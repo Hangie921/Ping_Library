@@ -1,15 +1,10 @@
-
-module.exports.codeEnum ={
-         Unknown_Error: 999,
-         OK: 200,
-         Bad_Request: 400,
-         Unauthorized:401,
-         Not_Found:404,
-         Already_Exists:601,
-         Password_Error:602,
-         No_Results:603
-};
-
-module.exports.obj = function (status_code,rtn_values) {
-  return {code: status_code,values:rtn_values};
+module.exports ={
+         Unknown_Error: {code:999,msg:"Unknown Error"},
+         OK: {code:200,msg:"OK"},
+         Bad_Request:{code:400,msg:"Bad Request"},
+         Unauthorized:{code:401,msg:"Unauthorized"},
+         Not_Found:{code:404,msg:"Not Found"},
+         Already_Exists:{code:601,msg:"Already Exists"},
+         Password_Error:{code:602,msg:"Password Error"},
+         No_Results:{code:603,msg:"No Results"}
 };

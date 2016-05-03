@@ -26,12 +26,12 @@ var session_login = function(req, res, obj, callbackUser) {
                     menuService.getMenuByUser(obj, function(menu_data) {
                         req.session.menu = menu_data;
 
-                    	callback();
+                        callback();
                     });
                 }
 
             }, function(err, results) {
-        		callbackUser(data);
+                callbackUser(data);
             });
         } else {
             req.session.user = null;
@@ -43,40 +43,48 @@ var session_login = function(req, res, obj, callbackUser) {
 }
 
 var session_getUserSession = function(req, res, callback) {
+    var rtn = null;
     try {
         if (req.session.user === null) {
-            callback(response.obj(response.codeEnum.Not_Found, null));
+            rtn = response.Not_Found;
         } else {
-            callback(response.obj(response.codeEnum.OK, req.session.user));
+            rtn = response.OK;
+            rtn.values = req.session.user;
         }
     } catch (e) {
-        callback(response.obj(response.codeEnum.Not_Found, null));
+        rtn = response.Not_Found;
     }
+    callback(rtn);
 }
 
 var session_getMenuSession = function(req, res, callback) {
+    var rtn = null;
     try {
-    	// console.log("session_getMenuSession>>>>>"+req.session.menu);
+        // console.log("session_getMenuSession>>>>>"+req.session.menu);
         if (req.session.menu === null) {
-            callback(response.obj(response.codeEnum.Not_Found, null));
+            rtn = response.Not_Found;
         } else {
-            callback(response.obj(response.codeEnum.OK, req.session.menu));
+            rtn = response.OK;
+            rtn.values = req.session.menu;
         }
     } catch (e) {
-        callback(response.obj(response.codeEnum.Not_Found, null));
+        rtn = response.Not_Found;
     }
+    callback(rtn);
 }
 
 
 var session_cleanUserSession = function(req, res, callback) {
+    var rtn = null;
     try {
         req.session.user = null;
         req.session.menu = null;
-        req.session.func = null;
-        callback(response.obj(response.codeEnum.OK, req.session.user));
+            rtn = response.OK;
+            rtn.values = req.session.user;
     } catch (e) {
-        callback(response.obj(response.codeEnum.Not_Found, null));
+        rtn = response.Not_Found;
     }
+    callback(rtn);
 }
 
 
