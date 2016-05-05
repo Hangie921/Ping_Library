@@ -6,10 +6,12 @@ var roleService = require('./roleService');
 
 var usersobj = require('../bean/users');
 var response = require('../common/response');
+var clone = require('../common/clone');
 
 //--PUBLIC FUNCTION---
 var session_login = function(req, res, obj, callbackUser) {
-    userService.getUser(obj, function(data) {
+    userService.getUser(obj, function(cb_data) {
+        var data = clone(cb_data);
         if (data.code === 200) {
             async.series({
                 user: function(callback) {
