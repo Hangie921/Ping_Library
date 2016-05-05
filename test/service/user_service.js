@@ -25,46 +25,10 @@ describe('UserService', function() {
         var user = new User();
         user.system_parameter = 0;
         user.id_number = "god"
-        user.email = 'god1@ping.com.sg';
-        user.name = '陳小強';
+        user.email = 'god@ping.com.sg';
+        user.name = '上帝';
         user.pwd = '!QAZ@WSX';
         user.company_id = "ping_team";
-        user.group_id = "";
-        return user;
-    }
-
-    function newUser2() {
-        var user = new User();
-        user.system_parameter = 0;
-        user.id_number = "god"
-        user.email = 'god2@ping.com.sg';
-        user.name = '楊小油哈哈兵';
-        user.pwd = '!QAZ@WSX';
-        user.company_id = "ping_team";
-        user.group_id = "";
-        return user;
-    }
-
-    function newUser3() {
-        var user = new User();
-        user.system_parameter = 0;
-        user.id_number = "god"
-        user.email = 'god3@ping.com.sg';
-        user.name = '馬油油哈兵';
-        user.pwd = '!QAZ@WSX';
-        user.company_id = "ping_team";
-        user.group_id = "";
-        return user;
-    }
-
-    function newUser4() {
-        var user = new User();
-        user.system_parameter = 0;
-        user.id_number = "god"
-        user.email = 'god4@ping.com.sg';
-        user.name = '油油低';
-        user.pwd = '!QAZ@WSX';
-        user.company_id = "hr_team";
         user.group_id = "";
         return user;
     }
@@ -211,90 +175,86 @@ describe('UserService', function() {
         });
     });
 
-    // describe('#getUserAll(user, function(data))', function() {
+    describe('#getUserAll(user, function(data))', function() {
 
-    //     var Company = mongoose.model('company', new mongoose.Schema({
-    //         // _id: mongoose.Schema.Types.ObjectId,
-    //         name: String,
-    //         description: String
-    //     }));
+        var Company = mongoose.model('company', new mongoose.Schema({
+            // _id: mongoose.Schema.Types.ObjectId,
+            name: String,
+            description: String
+        }));
 
-    //     var company = new Company();
-    //     company.name = "Ping";
-    //     company.description = "vary good";
+        var company = new Company();
+        company.name = "Ping";
+        company.description = "vary good";
 
-    //     var user = newUser();
-    //     user.custom = { _company: company._id };
+        var user = newUser();
+        user.custom = { _company: company._id };
 
-    //     it('get user\'s all data include references', function(done) {
-    //         async.series([
-    //             function save(callback) {
+        it('get user\'s all data include references', function(done) {
+            async.series([
+                function save(callback) {
 
-    //                 user.save(company, function(err, data) {
-    //                     // output("user = " + data);
-    //                 });
-    //                 company.save(company, function(err, data) {
-    //                     // output("company = " + data);
-    //                 });
-    //                 callback();
-    //             },
-    //             function load(callback) {
-    //                 var condition = {
-    //                     company: "_company",
-    //                     talent: "_talent"
-    //                 };
-    //                 user.getRefs(condition, function(data) {
-    //                     output("getRef = " + data);
-    //                 });
-    //                 callback();
-    //             }
-    //         ], function(err, results) {
-    //             done();
-    //         })
-
-    //     });
-    // });
-
-
-
-    describe('#query link (company_id,group_id,user l, function(data))', function() {
-
-        it('', function(done) {
-            var saveUser = null;
-            async.series({
-                registered: function(callback) {
-                    UserService.registered(newUser(), function(data) {
-                        saveUser = data;
-                        UserService.registered(newUser2(), function(data2) {
-                            UserService.registered(newUser3(), function(data3) {
-                                UserService.registered(newUser4(), function(data3) {
-                                    (data.code).should.be.equal(200);
-                                    (data.values).should.be.a('object');
-                                    callback();
-                                })
-                            })
-                        })
-                    })
+                    user.save(company, function(err, data) {
+                        output("user = " + data);
+                    });
+                    company.save(company, function(err, data) {
+                        // output("company = " + data);
+                    });
+                    callback();
                 },
-                link: function(callback) {
-                    var userSearch = new User();
-                    userSearch.system_parameter = 0;
-                    userSearch.company_id = "ping_team";
-                    userSearch.name = '馬 油兵';
-                    console.log("查詢條件=>" + userSearch.name);
-                    UserService.getColleague(userSearch, function(data) {
-                        for (var i in data.values) {
-                            console.log("查詢結果=>第" + (i + 1) + "筆 name=" + data.values[i].name);
-                        }
+                function load(callback) {
+                    var condition = {
+                        company: "_company",
+                        talent: "_talent"
+                    };
+                    user.getRefs(condition, function(data) {
+                        output("getRef = " + data);
+                    });
+                    callback();
+                }
+            ], function(err, results) {
+                done();
+            })
+
+        });
+    });
+
+    describe('#getUserRefs(user, condition, function(data))', function() {
+        it('get user detail infomation', function(done) {
+
+            var testUser = newUser();
+            async.series({
+                save: function(callback) {
+                    testUser.save(function(err, user) {
+                        output("save user = " + user._id);
                         callback();
                     });
+                },
+                update: function(callback) {
+                    testUser.custom = { _company: '1234' };
+                    (testUser).should.be.a('object');
+                    // output(testUser.custom);
+                    testUser.should.have.deep.property('custom._company', '1234');
+                    UserService.customizeUser(testUser, function(data) {
+                        (data.values).should.be.a('object');
+                        (data.values.system_parameter).should.be.equal(testUser.system_parameter);
+                        (data.values.id_number).should.be.equal(testUser.id_number);
+                        (data.values.email).should.be.equal(testUser.email);
+                        (data.values.name).should.be.equal(testUser.name);
+                        (data.values.pwd).should.be.equal(testUser.pwd);
+                        // (data.values).should.have.property('custom','_company');
+                        (data.values).should.have.deep.property('custom._company', '1234');
+                        callback();
+                    })
                 }
             }, function(err, results) {
+                // output("res", results);
                 done();
             });
 
         });
     });
+
 });
 
 
