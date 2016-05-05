@@ -81,8 +81,30 @@ describe('CompanyService', function() {
                 setCompany: function(callback) {
                     CompanyService.setCompany(companyData, function(company_data) {
                         (company_data.values).should.be.equal(companyData._id);
-                        CompanyService.getCompany( function(company_val) {
+                        CompanyService.getCompany(0, function(company_val) {
                             (company_val.values).should.be.a('Array');
+                            callback();
+                        });
+                    });
+                }
+            }, function(err, results) {
+                done();
+            });
+
+        });
+    });
+
+    describe('#setCompanyById(companyobj, function(data)) ', function() {
+        it('setCompanyById ', function(done) {
+            var companyData = newCompany();
+            async.series({
+                setCompany: function(callback) {
+                    CompanyService.setCompany(companyData, function(company_data) {
+                        (company_data.values).should.be.equal(companyData._id);
+
+                        companyData.address = "test";
+                        CompanyService.setCompanyById(companyData, function(company_val) {
+                            (company_val.values.address).should.be.equal(companyData.address);
                             callback();
                         });
                     });

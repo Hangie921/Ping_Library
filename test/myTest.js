@@ -19,6 +19,9 @@ var Group = pinglib.Group;
 var Company = pinglib.Company;
 
 
+var UserService = pinglib.UserService;
+
+
 var clone = require('../common/clone');
 
 // var serviceConfig = require('../example/server')
@@ -416,11 +419,24 @@ function newGroup2_2() {
         return company;
     }
 
-    companyService.setCompany(newCompany1(),function (argument) {
-      console.log("company1 _id=>"+argument.values);
-      callback();
-    });
-    companyService.setCompany(newCompany2(),function (argument) {
-      console.log("company2 _id=>"+argument.values);
-      callback();
-    });
+    // companyService.setCompany(newCompany1(),function (argument) {
+    //   console.log("company1 _id=>"+argument.values);
+    //   callback();
+    // });
+    // companyService.setCompany(newCompany2(),function (argument) {
+    //   console.log("company2 _id=>"+argument.values);
+    //   callback();
+    // });
+
+
+// //將USER 輸入company or group
+sessionManager.getUser(userReg, function (usrObj) {
+  var temp_userObj = clone(usrObj);
+
+  temp_userObj.values[0].company_id = 'ping_hr';
+  temp_userObj.values[0].group_id = 'mis1_1';
+  //company group
+  UserService.setUserById(temp_userObj.values[0],function (data) {
+      console.log("data=>"+data.values);
+  });
+});

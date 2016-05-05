@@ -140,6 +140,38 @@ var fun_customizeUser = function(userobj, callback) {
     }
 }
 
+//Colleague -group
+var fun_getColleague = function(userObjCondition, callback) {
+    var condition = {};
+    //判斷有無company_id
+    condition["system_parameter"] = userObjCondition.system_parameter;
+    if (userObjCondition.company_id) {
+        condition["company_id"] = userObjCondition.company_id;
+    }
+    //判斷有無group_id
+    if (userObjCondition.group_id) {
+        condition["group_id"] = userObjCondition.group_id;
+    }
+    //查詢 % like %
+    if (userObjCondition.name) {
+        condition["name"] =
+            new RegExp(userObjCondition.name.replace(/[\s]+/g, ".*"), "i");
+    }
+    //查詢 % like[0] % or % link[1]% or % link[2]% ...
+    
+    console.log("condition="+userObjCondition);
+
+    User.find(
+        condition,
+        function(err, user_data) {
+            var rtn = null;
+            rtn = response.OK;
+            rtn.values = user_data;
+
+            callback(rtn);
+        });
+}
+
 var fun_getUserRefs = function(userobj, condition, callback) {
     User.findOne({
         system_parameter: userobj.system_parameter,
@@ -163,4 +195,5 @@ exports.emailCheck = fun_emailCheck;
 exports.setMenuCrud = fun_setMenuCrud;
 exports.setUserRole = fun_setUserRole;
 exports.customizeUser = fun_customizeUser;
+exports.getColleague = fun_getColleague;
 exports.getUserRefs = fun_getUserRefs;

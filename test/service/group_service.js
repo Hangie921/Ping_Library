@@ -167,9 +167,14 @@ describe('GroupService', function() {
                 },
                 get: function(callback) {
                     GroupService.getGroup(0, function(data) {
-                        console.log(data);
                         (data).should.be.a('array');
                         (data[0]).should.have.property('group').with.lengthOf(2);
+                        callback();
+                    });
+                },
+                getList: function(callback) {
+                    GroupService.getGroupList(0, function(data) {
+                        (data).should.be.a('array');
                         callback();
                     });
                 }
