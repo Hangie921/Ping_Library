@@ -114,12 +114,14 @@ describe('UserService', function() {
                 setUserRole: function(callback) {
                     //此測試項目 預設假資料
                     RoleService.setRole(newRole(), function(cbRole) {
+                        // console.log("cbRole="+cbRole.values);
                         var temp_cbRole = clone(cbRole);
                         //由前端畫面傳回roleid 並確認資料正確性
                         RoleService.getRoleById(temp_cbRole.values, function(roleDate) {
                             var temp_roleDate = new clone(roleDate);
                             //由UserService 取得user info
                             UserService.getUser(testUser, function(userObj) {
+                            // console.log("cbRole="+cbRole.values);
                                 var temp_userObj = new clone(userObj);
                                 //由UserService取得User物件 以及搭配 前端畫面傳回json 或 組合後的array roleid 查詢
                                 UserService.setUserRole(temp_userObj, temp_roleDate, function(rtnUserObj) {

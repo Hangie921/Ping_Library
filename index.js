@@ -5,12 +5,17 @@ main.User = require('./bean/users');
 main.Role = require('./bean/roles');
 main.Menu = require('./bean/menu');
 main.Group = require('./bean/group');
+main.LeavePermit = require('./bean/leavePermit');
+main.LeaveRoleByLevel = require('./bean/leaveRoleByLevel');
+main.LeaveRoleBySchedule = require('./bean/LeaveRoleBySchedule');
+main.LeaveType = require('./bean/leaveType');
 
 main.CompanyService = require('./service/companyService');
 main.UserService = require('./service/userService');
 main.RoleService = require('./service/roleService');
 main.MenuService = require('./service/menuService');
 main.GroupService = require('./service/groupService');
+main.LeaveService = require('./service/leaveService');
 main.SessionService = require('./service/sessionService');
 main.response = require('./common/response');
 module.exports = main;

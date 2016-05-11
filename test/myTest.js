@@ -2,6 +2,10 @@ var express = require('express');
 var usersobj = require('../bean/users');
 var functionobj = require('../bean/function');
 var roleobj = require('../bean/roles');
+var leaveRoleByLevel = require('../bean/leaveRoleByLevel');
+var leaveRoleBySchedule = require('../bean/leaveRoleBySchedule');
+var leaveType = require('../bean/leaveType');
+var leavePermit = require('../bean/leavePermit');
 var session = require('express-session');
 
 var funService = require('../service/functionService');

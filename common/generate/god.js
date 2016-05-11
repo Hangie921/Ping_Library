@@ -2,6 +2,9 @@ var User = require('../../bean/users');
 var Role = require('../../bean/roles');
 // var Function = require('../../bean/function');
 var Menu = require('../../bean/menu');
+var LeaveRoleByLevel = require('../../bean/leaveRoleByLevel');
+var LeaveRoleBySchedule = require('../../bean/leaveRoleBySchedule');
+var LeaveType = require('../../bean/leaveType');
 
 var userService = require('../../service/userService');
 var response = require('../../common/response');
@@ -68,7 +71,7 @@ var god = [{
         { menu_id: "memberno02", "create": true, "read": true, "update": true, "delete": true, "disable": false },
         { menu_id: "memberno0301", "create": true, "read": true, "update": true, "delete": true, "disable": false },
         { menu_id: "rootno01", "create": true, "read": true, "update": true, "delete": true, "disable": false },
-        {menu_id:"rootno02","create":true,"read":true,"update":true,"delete":true,"disable":false},
+        { menu_id: "rootno02", "create": true, "read": true, "update": true, "delete": true, "disable": false },
     ]
 }];
 
@@ -91,6 +94,31 @@ var funDataR3 = [
     { _id: "settingno0102", parent_id: "settingno01", name: "function setting", url: "http://localhost/setting function", system_parameter: 0 },
     { _id: "settingno0103", parent_id: "settingno01", name: "permission setting", url: "http://localhost/setting persission", system_parameter: 0 },
     { _id: "memberno0301", parent_id: "memberno03", name: "member happy hour", url: "http://localhost/happyhour", system_parameter: 0 },
+]
+
+
+
+var leaveType = [
+    { _id: "leaveType001", name: "病假" },
+    { _id: "leaveType002", name: "公假" },
+    { _id: "leaveType003", name: "特休" },
+    { _id: "leaveType004", name: "補休", descript: "51勞工節" },
+    { _id: "leaveType005", name: "其他", descript: "" },
+]
+
+var leaveRoleByLevel = [
+    { _id: "leaveRoleByLevel001", leave_type_id: "leaveType003", level: 36, use_days: 3360 }, //36個月(3年)3360小時(8(一天八小時)x60 x7(天))
+    { _id: "leaveRoleByLevel002", leave_type_id: "leaveType003", level: 60, use_days: 4800 }, //60個月(5年)3360小時(8(一天八小時)x60 x10(天))
+    { _id: "leaveRoleByLevel003", leave_type_id: "leaveType003", level: 120, use_days: 5280 }, //120個月(10年)3360小時(8(一天八小時)x60 x11(天))
+    { _id: "leaveRoleByLevel004", leave_type_id: "leaveType003", level: 132, use_days: 5760 }, //132個月(11年)3360小時(8(一天八小時)x60 x12(天))
+    { _id: "leaveRoleByLevel005", leave_type_id: "leaveType003", level: 144, use_days: 6240 }, //144個月(12年)3360小時(8(一天八小時)x60 x13(天))
+    { _id: "leaveRoleByLevel006", leave_type_id: "leaveType004", level: 0, use_days: 480 },
+]
+
+var leaveRoleBySchedule = [
+    { _id: "leaveRoleBySchedule001", days: 1, need_rank_apply: 1 },
+    { _id: "leaveRoleBySchedule001", days: 960, need_rank_apply: 2 }, //超過16小時(2天=960分鐘) 必須2層主管簽名
+    { _id: "leaveRoleBySchedule001", days: 2880, need_rank_apply: 3 }, //超過2880小時(6天=2889分鐘) 必須3層主管簽名
 ]
 
 var godSearch = new User({
@@ -141,6 +169,10 @@ userService.getUser(godSearch, function(data) {
         Role.collection.insertMany(userRoleData, function(err, r) {
 
         });
+
+        LeaveRoleByLevel.collection.insertMany(leaveRoleByLevel, function(err, r) {});
+        LeaveRoleBySchedule.collection.insertMany(leaveRoleBySchedule, function(err, r) {});
+        LeaveType.collection.insertMany(leaveType, function(err, r) {});
     }
 
 });
