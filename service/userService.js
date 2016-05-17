@@ -15,7 +15,7 @@ var fun_setUserById = function(userobj, callback) {
 
 var fun_getUser = function(obj, callback) {
     User.find({
-        system_parameter: obj.system_parameter,
+        // system_parameter: obj.system_parameter,
         email: obj.email,
         // pwd: obj.pwd
     }, function(err, rtn_obj) {

@@ -7,7 +7,7 @@ main.Menu = require('./bean/menu');
 main.Group = require('./bean/group');
 main.LeavePermit = require('./bean/leavePermit');
 main.LeaveRoleByLevel = require('./bean/leaveRoleByLevel');
-main.LeaveRoleBySchedule = require('./bean/LeaveRoleBySchedule');
+main.LeaveRoleBySchedule = require('./bean/leaveRoleBySchedule');
 main.LeaveType = require('./bean/leaveType');
 
 main.CompanyService = require('./service/companyService');

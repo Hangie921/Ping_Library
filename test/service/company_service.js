@@ -9,6 +9,7 @@ mongodb = 'mongodb://192.168.60.65/unitest';
 var pinglib = require('../../index.js');
 var Company = pinglib.Company;
 var LeaveRoleByLevel = pinglib.LeaveRoleByLevel;
+var LeaveRoleBySchedule = pinglib.LeaveRoleBySchedule;
 var CompanyService = pinglib.CompanyService;
 var LeaveService = pinglib.LeaveService;
 
@@ -36,12 +37,19 @@ describe('CompanyService', function() {
         { _id: "leaveRoleByLevel005", leave_type_id: "leaveType003", level: 144, use_days: 6240 }, //144個月(12年)3360小時(8(一天八小時)x60 x13(天))
         { _id: "leaveRoleByLevel006", leave_type_id: "leaveType004", level: 0, use_days: 480 },
     ]
+    var leaveRoleBySchedule = [
+        { _id: "leaveRoleBySchedule001", days: 1, need_rank_apply: 1 },
+        { _id: "leaveRoleBySchedule002", days: 960, need_rank_apply: 2 }, //超過16小時(2天=960分鐘) 必須2層主管簽名
+        { _id: "leaveRoleBySchedule003", days: 2880, need_rank_apply: 3 }, //超過2880小時(6天=2889分鐘) 必須3層主管簽名
+    ]
+
     beforeEach(function(done) {
         function clearDB() {
             for (var i in mongoose.connection.collections) {
                 mongoose.connection.collections[i].remove(function() {});
             }
             LeaveRoleByLevel.collection.insertMany(leaveRoleByLevel, function(err, r) {});
+            LeaveRoleBySchedule.collection.insertMany(leaveRoleBySchedule, function(err, r) {});
             // output("cleanDB()");
             return done();
         }
@@ -91,8 +99,7 @@ describe('CompanyService', function() {
                     // LeaveService.getLeaveRoleByLevelByCondition(queryLeaveRoleByLevel, function(rtnData) {
                     //     callback();
                     // });
-                    LeaveRoleByLevel.find(
-                        {},
+                    LeaveRoleByLevel.find({},
                         function(err, lrbl_data) {
                             console.log("lrbl_data is " + lrbl_data + "|end");
                             callback();

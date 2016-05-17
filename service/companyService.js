@@ -3,7 +3,7 @@ var Company = require('../bean/company');
 var LeaveRoleByLevel = require('../bean/leaveRoleByLevel');
 var LeaveService = require('./leaveService');
 var LeaveRoleByLevel = require('../bean/leaveRoleByLevel');
-// var LeaveRoleBySchedule = require('../bean/leaveRoleBySchedule');
+var LeaveRoleBySchedule = require('../bean/leaveRoleBySchedule');
 // var LeaveType = require('../bean/leaveType');
 var response = require('../common/response');
 var mongoose = require('mongoose');
@@ -85,14 +85,26 @@ function setLeaveDefVal(new_system_parameter) {
             newData._id = uuid.v1();
             newData.system_parameter = new_system_parameter;
             newData.leave_type_id = default_leave_role.values[i].leave_type_id;
-            newData.leave = default_leave_role.values[i].leave;
+            newData.level = default_leave_role.values[i].level;
             newData.use_days = default_leave_role.values[i].use_days;
             LeaveService.setLeaveRoleByLevel(newData, function(data_rtn) {});
-
-
         }
     });
 
+
+    var queryLeaveRoleByScheduleByCondition = new LeaveRoleBySchedule();
+    LeaveService.getLeaveRoleByScheduleByCondition(queryLeaveRoleByScheduleByCondition, function(default_schedule_role) {
+        for (var i in default_schedule_role.values) {
+            var newData = new LeaveRoleBySchedule();
+
+            newData._id = uuid.v1();
+            newData.system_parameter = new_system_parameter;
+            newData.days = default_schedule_role.values[i].days;
+            newData.need_rank_apply = default_schedule_role.values[i].need_rank_apply;
+            newData.need_group_id_apply = default_schedule_role.values[i].need_group_id_apply;
+            LeaveService.setLeaveRoleBySchedule(newData, function(data_rtn) {});
+        }
+    });
 
 }
 

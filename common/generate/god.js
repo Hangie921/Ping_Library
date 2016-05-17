@@ -117,8 +117,8 @@ var leaveRoleByLevel = [
 
 var leaveRoleBySchedule = [
     { _id: "leaveRoleBySchedule001", days: 1, need_rank_apply: 1 },
-    { _id: "leaveRoleBySchedule001", days: 960, need_rank_apply: 2 }, //超過16小時(2天=960分鐘) 必須2層主管簽名
-    { _id: "leaveRoleBySchedule001", days: 2880, need_rank_apply: 3 }, //超過2880小時(6天=2889分鐘) 必須3層主管簽名
+    { _id: "leaveRoleBySchedule002", days: 960, need_rank_apply: 2 }, //超過16小時(2天=960分鐘) 必須2層主管簽名
+    { _id: "leaveRoleBySchedule003", days: 2880, need_rank_apply: 3 }, //超過2880小時(6天=2889分鐘) 必須3層主管簽名
 ]
 
 var godSearch = new User({
@@ -171,9 +171,9 @@ userService.getUser(godSearch, function(data) {
         });
 
         LeaveRoleByLevel.collection.insertMany(leaveRoleByLevel, function(err, r) {});
-        LeaveRoleBySchedule.collection.insertMany(leaveRoleBySchedule, function(err, r) {});
         LeaveType.collection.insertMany(leaveType, function(err, r) {});
     }
+        LeaveRoleBySchedule.collection.insertMany(leaveRoleBySchedule, function(err, r) {});
 
 });
 

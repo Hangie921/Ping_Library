@@ -22,7 +22,11 @@ var fun_getGroup = function(system_parameter, callback) {
         hashGroup = data;
         var groupRootAry = [];
         for (var key in data) {
-            if (data[key].parent_id == null) {
+            if (data[key].parent_id == null || data[key].parent_id == "null" || data[key].parent_id.trim() == "") {
+                data[key].rank = 0;
+                //第一層 儲存rank
+                Group.findByIdAndUpdate(data[key]._id, data[key], { new: true }, function(err, data) {});
+
                 groupRootAry.push(data[key]);
                 getGroupByParentId(data[key]);
             }
@@ -37,8 +41,8 @@ var fun_getGroupList = function(system_parameter, callback) {
         if (err) throw err;
         //為jOrgChart套件而增加 將null變更為=>""
         for (var key in data) {
-            if (data[key].parent_id == null) {
-                data[key].parent_id="";
+            if (data[key].parent_id == null || data[key].parent_id == "null" || data[key].parent_id.trim() == "") {
+                data[key].parent_id = "";
             }
         }
         callback(data);
@@ -80,6 +84,9 @@ function findHashGroup_id(_id, obj) {
     for (var key in hashGroup) {
         if (hashGroup[key].parent_id == _id) {
             //將物件塞入此目錄下的子節點
+            hashGroup[key].rank = obj.rank + 1;
+            //第二層之後 儲存rank
+            Group.findByIdAndUpdate(hashGroup[key]._id, hashGroup[key], { new: true }, function(err, data) {});
             obj.group.push(hashGroup[key]);
             rtnAry.push(hashGroup[key]);
         }

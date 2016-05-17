@@ -7,6 +7,7 @@ var groupSchema = new Schema({
 	system_parameter:{ type: Number, min: 0, max: 999 },
 	name:String,
 	parent_id:String,
+	rank:Number,
 	group:Array
 })
 

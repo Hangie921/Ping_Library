@@ -17,6 +17,7 @@ var userSchema = new Schema({
     menu_crud: Array,
     company_id:String,
     group_id:String,
+    available_date:String, 
     custom: Schema.Types.Mixed
 });
 
