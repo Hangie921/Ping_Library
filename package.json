@@ -15,6 +15,7 @@
     "mongodb": "^2.1.11",
     "mongoose": "^4.4.10",
     "nconf": "^0.8.4",
+    "serve-favicon": "^2.3.0",
     "should": "^8.3.0",
     "winston": "^2.2.0",
     "winston-console-formatter": "^0.3.1"
